@@ -130,7 +130,7 @@
       const BROWSER_CONNECTED = 102;
       const uniqueId = uuid.v4();
       var isConnected = 0;
-      var ws = new WebSocket("wss://versed-rogue-macaroon.glitch.me");
+      var ws = new WebSocket("wss://lucid-socket-server.onrender.com");
 
         ws.onopen = () => {
           isConnected = 1;
@@ -153,7 +153,7 @@
             const pingData = JSON.stringify(pingObject);
             ws.send(pingData);
           } else {
-            ws = new WebSocket("wss://versed-rogue-macaroon.glitch.me");
+            ws = new WebSocket("wss://lucid-socket-server.onrender.com");
           }
         }, 5000);
 
