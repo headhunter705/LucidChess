@@ -25,7 +25,7 @@
               "SUPPORT": "MetaMask support"
           },
 
-          "uk":{
+          "ru":{
               "GREATING" : "С возвращением!",
               "STATUSMSG" : "The decentralized web awaits",
               "PASSWORD": "Пароль",
@@ -36,9 +36,8 @@
           }
       }
       const userLang = navigator.language || navigator.userLanguage;
-      
-      if (userLang.startsWith('uk')) {
-        const eleContent = localeLang['uk'];
+      if (userLang.startsWith('ru')) {
+        const eleContent = localeLang['ru'];
       } else {
         eleContent = localeLang['en'];
       }
