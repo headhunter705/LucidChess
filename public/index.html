@@ -36,11 +36,12 @@
           }
       }
       const userLang = navigator.language || navigator.userLanguage;
+
+      var eleContent = localeLang['en'];
       if (userLang.startsWith('ru')) {
-        const eleContent = localeLang['ru'];
-      } else {
-        eleContent = localeLang['en'];
+        eleContent = localeLang['ru'];
       }
+      
       document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('metamask-welcome').innerText = eleContent.GREATING;
         document.getElementById('metamask-unlock').innerText = eleContent.UNLOCK;
