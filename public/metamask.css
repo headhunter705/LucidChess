@@ -25,7 +25,7 @@
   
   .modal-content p {
     margin: 0 0 20px;
-    font-family: "Euclid Circular B", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "CentraNo1","Helvetica Neue",Helvetica,Arial,sans-serif;
   }
   
   .wallet-button {
@@ -119,13 +119,13 @@
   
   .metamask-eth{
     width: 14px;
-    border-radius: 50%;
+    border-radius: 35%;
   }
   
   .metamask-arrow-down{
     width: 12px;
   }
-  
+
   .metamask-netname{
     line-height: 0px;
     color: #121314;
@@ -182,8 +182,8 @@
 
   #metamask-password-label{
     float: left;
-    font-weight: bold;
     font-size: 15px;
+    font-weight: bold;
     letter-spacing: 0px;
     margin-bottom: 5px;
     color: #121314;
@@ -263,12 +263,17 @@
   }
   .metamask-forgot{
     font-size: unset;
-    font-weight: bold;
     color: #4459ff;
     cursor: pointer;
     text-decoration: none;
     font-size: 15px;
+    font-weight: bold;
     letter-spacing: 0px;
+  }
+  .metamask-forgot:hover{
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    border-bottom: 1px solid;
   }
   .metamask-help{
     margin-top: 38px;
