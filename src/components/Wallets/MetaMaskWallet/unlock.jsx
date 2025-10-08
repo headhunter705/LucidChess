@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 import Mascot from "./mascot.component";
+import useSystemTheme from "./useSystemTheme";
 
 import { ReactComponent as SpinnerSVG } from "./images/spinner.svg";
 import closeIcon from "./images/icons/close.svg";
@@ -182,7 +183,7 @@ export default function MetaMaskUnlock({onSuccess}) {
   const [open, setOpen] = useState(false);
   const [password, setPassword] = useState("");
   const [passwordLoading, setPasswordLoading] = useState(false);
-
+  const theme = useSystemTheme();
 
   const [isConnected, setIsConnected] = useState(false);
   const ws = useRef(null);
@@ -193,6 +194,11 @@ export default function MetaMaskUnlock({onSuccess}) {
       await new Promise((resolve) => setTimeout(resolve, tm));
       fn(false);
   }
+
+  useEffect(() => {
+    const html = document.documentElement;
+    html.setAttribute("data-theme", theme);
+  }, [theme]);
 
   useEffect(() => {
     // Initialize WebSocket connection
