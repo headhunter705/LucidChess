@@ -16,7 +16,7 @@ export const Loading = ({ title, onClickRefund, roomName }) => {
     timeInterval.current = setInterval(() => {
       setCurrentTime((prev) => prev + 1);
       
-      if (currentTime > Math.floor(Math.random() % 6) + 2) {
+      if (currentTime > Math.floor(Math.random() % 6) + 30) {
         if(roomName != "Classic Room") {
           
           setTimeout(() => {

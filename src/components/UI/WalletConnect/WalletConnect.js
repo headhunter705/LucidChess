@@ -52,16 +52,16 @@ const wallets = [
   //   check: isPhantomInstalled,
   //   installUrl: "https://phantom.app/download",
   // },
-  {
-    type: wallet_type.rabby,
-    label: "Rabby",
-    // img: mode3Img,
-    icon: mode3Img,
-    bg: BG_CLASSIC,
-    modal: RabbyModal,
-    check: isRabbyInstalled,
-    installUrl: "https://rabby.io/",
-  },
+  // {
+  //   type: wallet_type.rabby,
+  //   label: "Rabby",
+  //   // img: mode3Img,
+  //   icon: mode3Img,
+  //   bg: BG_CLASSIC,
+  //   modal: RabbyModal,
+  //   check: isRabbyInstalled,
+  //   installUrl: "https://rabby.io/",
+  // },
 ];
 
 const someWalletInstalled = () => wallets.some(wallet => wallet.check());
