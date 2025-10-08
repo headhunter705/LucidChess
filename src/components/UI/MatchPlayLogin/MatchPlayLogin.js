@@ -3,15 +3,18 @@ import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./MatchPlayLogin.scss";
 import { gameModes } from "../../../utils/constant";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export const MatchPlayLogin = () => {
 	const [name, setName] = useState('');
 	const navigate = useNavigate();
+	const inputRef = useRef(null);
 
 	const createAction = () => {
-		if( name === '' )
+		if( name === '' ){
+			if (inputRef.current) inputRef.current.focus();
 			return;
+		}
 
 		navigate('/friendPlay/rooms', { state: { mode: gameModes['P2P'], username: name, friendMatch: false }});
 
@@ -26,6 +29,7 @@ export const MatchPlayLogin = () => {
 
 					<div className="u-input-wrap">
 						<input
+							ref={inputRef}
 							className="u-input"
 							type="text"
 							placeholder="Enter your name"
@@ -35,10 +39,10 @@ export const MatchPlayLogin = () => {
 					</div>
 
 					<div className="u-buttongroup">
-						<button className="u-button" onClick={ () => { alert('Connect Wallet please!') } }>Play</button>
+						<button className="u-button" onClick={ createAction }>Play</button>
 					</div>
 				</div>
-				<div className="u-ribbon1" onClick={ () => { window.openMetaMaskModal()} }>Connect Wallet</div>
+				{/* <div className="u-ribbon1" onClick={ () => { navigate('/connect')} }>Connect Wallet</div> */}
 			</div>
         </div>
     )

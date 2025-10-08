@@ -12,29 +12,32 @@ export default class Ranking extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    axios
-      .post(
-        `http://${window.location.hostname}:${socketServerPort}/api/rankAll`
-      )
-      .then((res) => {
-        let rankData = [...res.data.rankData];
-        rankData.sort((a, b) => {
-          if ( (b.won - b.lost) > (a.won - a.lost) ) {
-            return 1;
-          } else if ( (b.won - b.lost) < (a.won - a.lost) ) {
-            return -1;
-          } else {
-            return b.won - a.won;
-          }
-        });
+  async componentDidMount() {
+    try {
+      // const res = await axios.post(
+      //   `http://${window.location.hostname}:${socketServerPort}/api/rankAll`
+      // );
 
-        this.setState({
-          rankData,
-        });
+      // let rankData = [...res.data.rankData];
 
-        console.log(this.state.rankData);
-      });
+      // // sort data
+      // rankData.sort((a, b) => {
+      //   if (b.won - b.lost > a.won - a.lost) {
+      //     return 1;
+      //   } else if (b.won - b.lost < a.won - a.lost) {
+      //     return -1;
+      //   } else {
+      //     return b.won - a.won;
+      //   }
+      // });
+
+      // this.setState({ rankData });
+      // console.log("Rank data:", rankData);
+    } catch (error) {
+      console.error("Error fetching rank data:", error.message);
+      this.setState({ error });
+    } finally {
+    }
   }
 
   render() {
@@ -55,23 +58,37 @@ export default class Ranking extends Component {
               <div className="ranking-table-head-won">matches won/loss</div>
               <div className="ranking-table-head-earn">LLG earn</div>
             </div>
-            <div className="ranking-table-body">
-              {this.state && this.state.rankData
-                ? this.state.rankData.map((item, index) => {
-                    const info = {
-                      name: item.username,
-                      won: `${item.won} / ${item.lost}`,
-                      earn: item.earn,
-                      key: index,
-                      index: index,
-                    };
+            {this.error ? (
+              <div className="ranking-table-body">
+                {this.state && this.state.rankData
+                  ? this.state.rankData.map((item, index) => {
+                      const info = {
+                        name: item.username,
+                        won: `${item.won} / ${item.lost}`,
+                        earn: item.earn,
+                        key: index,
+                        index: index,
+                      };
 
-                    return <RankingRow {...info}></RankingRow>;
-                  })
-                : null}
-            </div>
+                      return <RankingRow {...info}></RankingRow>;
+                    })
+                  : null}
+                <RankingRow name="asdf" won="12/1" earn="12"></RankingRow>
+                <RankingRow name="asdf" won="12/1" earn="12"></RankingRow>
+
+                <RankingRow name="asdf" won="12/1" earn="12"></RankingRow>
+                <RankingRow name="asdf" won="12/1" earn="12"></RankingRow>
+                <RankingRow name="asdf" won="12/1" earn="12"></RankingRow>
+
+                <RankingRow name="asdf" won="12/1" earn="12"></RankingRow>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
-          <div className="ranking-btn_choose" onClick={this.props.hideAction}>Back</div>
+          <div className="ranking-btn_choose" onClick={this.props.hideAction}>
+            Back
+          </div>
         </div>
       </Modal>
     );

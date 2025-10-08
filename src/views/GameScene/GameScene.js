@@ -459,6 +459,7 @@ export default class Scene extends Component {
                 this.socket.on( socketEvents['SC_SendDrawRequest'], this.handleSendDrawRequest.bind(this) );
                 this.socket.on( socketEvents['SC_DrawMatch'], this.handleDrawMatch.bind(this) );
             } else {
+                // 
                 this.setState({
                     showWaitingModal: false,
                 })

@@ -25,7 +25,7 @@ const llgRewardContractABI = require('../../../utils/llg-reward-contract-abi.jso
 
 let arrInfo = {}
 
-export const Connect = () => {
+export const Connect = () => {  
   const navigate = useNavigate()
   const location = useLocation()
   const [wallet, setWallet] = useState()
@@ -43,24 +43,25 @@ export const Connect = () => {
 
   console.log(location.state);
 
-  switch (location.state.roomName) {
-    case 'Classic Room':
-      amount = 0
-      break
-    case 'Silver Room':
-      amount = 50
-      break
-    case 'Gold Room':
-      amount = 100
-      break
-    case 'Platinum Room':
-      amount = 200
-      break
-    case 'Diamond Room':
-      amount = 500
-      break
-    default:
-  }
+  amount = 50;
+  // switch (location.state.roomName) {
+  //   case 'Classic Room':
+  //     amount = 0
+  //     break
+  //   case 'Silver Room':
+  //     amount = 50
+  //     break
+  //   case 'Gold Room':
+  //     amount = 100
+  //     break
+  //   case 'Platinum Room':
+  //     amount = 200
+  //     break
+  //   case 'Diamond Room':
+  //     amount = 500
+  //     break
+  //   default:
+  // }
 
   arrInfo = {
     connect: {

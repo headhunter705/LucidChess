@@ -1,0 +1,80 @@
+@font-face {
+  src: url(../fonts/Inter/Inter-Black.woff) format("woff");
+  font-display: block;
+  font-style: normal;
+  font-weight: 800;
+  font-family: Inter;
+}
+@font-face {
+  src: url(../fonts/Inter/Inter-BlackItalic.woff) format("woff");
+  font-display: block;
+  font-style: italic;
+  font-weight: 800;
+  font-family: Inter;
+}
+@font-face {
+  src: url(../fonts/Inter/Inter-Bold.woff) format("woff");
+  font-display: block;
+  font-style: normal;
+  font-weight: 700;
+  font-family: Inter;
+}
+@font-face {
+  src: url(../fonts/Inter/Inter-BoldItalic.woff) format("woff");
+  font-display: block;
+  font-style: italic;
+  font-weight: 700;
+  font-family: Inter;
+}
+@font-face {
+  src: url(../fonts/Inter/Inter-Medium.woff) format("woff");
+  font-display: block;
+  font-style: normal;
+  font-weight: 500;
+  font-family: Inter;
+}
+@font-face {
+  src: url(../fonts/Inter/Inter-MediumItalic.woff) format("woff");
+  font-display: block;
+  font-style: italic;
+  font-weight: 500;
+  font-family: Inter;
+}
+@font-face {
+  src: url(../fonts/Inter/Inter-Regular.woff) format("woff");
+  font-display: block;
+  font-style: normal;
+  font-weight: 400;
+  font-family: Inter;
+}
+/* @font-face {
+  src: url(../fonts/Inter/Inter-RegularItalic.woff) format("woff");
+  font-display: block;
+  font-style: italic;
+  font-weight: 400;
+  font-family: Inter;
+} */
+@font-face {
+  src: url(../fonts/Inter/Inter-SemiBold.woff) format("woff");
+  font-display: block;
+  font-style: normal;
+  font-weight: 600;
+  font-family: Inter;
+}
+@font-face {
+  src: url(../fonts/Inter/Inter-SemiBoldItalic.woff) format("woff");
+  font-display: block;
+  font-style: italic;
+  font-weight: 600;
+  font-family: Inter;
+}
+body,
+html,
+* {
+  box-sizing: border-box;
+  font-family: Inter, Roboto, Arial;
+  user-select: none;
+  color: currentcolor;
+  text-rendering: optimizespeed;
+  -webkit-font-smoothing: antialiased;
+}

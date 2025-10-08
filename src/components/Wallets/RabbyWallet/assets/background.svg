@@ -1,0 +1,154 @@
+<svg
+width="400"
+height="600"
+fill="none"
+xmlns="http://www.w3.org/2000/svg"
+>
+<g clip-path="url(#background_svg__clip0_114948_40926)">
+    <path
+    transform="matrix(1 0 0 -1 0 600)"
+    fill="url(#background_svg__paint0_radial_114948_40926)"
+    d="M0 0h400v600H0z"
+    ></path>
+    <g
+    opacity="0.2"
+    filter="url(#background_svg__filter0_f_114948_40926)"
+    >
+    <path
+        d="M473.837 864.74c-129.844 102.557-195.138 14.712-265.119-73.89-69.981-88.601-118.147-144.403 11.696-246.96 129.844-102.556 174.336-148.327 244.317-59.726s138.95 278.02 9.106 380.576z"
+        fill="#4569C7"
+    ></path>
+    </g>
+    <g
+    opacity="0.1"
+    filter="url(#background_svg__filter1_f_114948_40926)"
+    >
+    <path
+        d="M117.4-110.123c149.18 49.577 290.17-69.223 240.593 79.956-49.576 149.18-210.7 229.924-359.88 180.347-149.179-49.576-229.923-210.7-180.347-359.88 49.577-149.179 150.455 50.001 299.634 99.577z"
+        fill="#2174A3"
+    ></path>
+    </g>
+    <path
+    d="M0-10h400v621H0V-10z"
+    fill="url(#background_svg__paint1_radial_114948_40926)"
+    ></path>
+    <g filter="url(#background_svg__filter2_b_114948_40926)">
+    <path
+        d="M0-10h400v621H0V-10z"
+        fill="#ECF3FF"
+        fill-opacity="0.7"
+    ></path>
+    </g>
+    <path
+    fill="url(#background_svg__paint2_linear_114948_40926)"
+    d="M0 0h400v600H0z"
+    ></path>
+</g>
+<defs>
+    <filter
+    id="background_svg__filter0_f_114948_40926"
+    x="-60.978"
+    y="237.073"
+    width="807.895"
+    height="873.845"
+    filterUnits="userSpaceOnUse"
+    color-interpolation-filters="sRGB"
+    >
+    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+    <feBlend
+        in="SourceGraphic"
+        in2="BackgroundImageFix"
+        result="shape"
+    ></feBlend>
+    <feGaussianBlur
+        stdDeviation="100"
+        result="effect1_foregroundBlur_114948_40926"
+    ></feGaussianBlur>
+    </filter>
+    <filter
+    id="background_svg__filter1_f_114948_40926"
+    x="-396.836"
+    y="-464.175"
+    width="964.947"
+    height="828.958"
+    filterUnits="userSpaceOnUse"
+    color-interpolation-filters="sRGB"
+    >
+    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+    <feBlend
+        in="SourceGraphic"
+        in2="BackgroundImageFix"
+        result="shape"
+    ></feBlend>
+    <feGaussianBlur
+        stdDeviation="100"
+        result="effect1_foregroundBlur_114948_40926"
+    ></feGaussianBlur>
+    </filter>
+    <filter
+    id="background_svg__filter2_b_114948_40926"
+    x="-40"
+    y="-50"
+    width="480"
+    height="701"
+    filterUnits="userSpaceOnUse"
+    color-interpolation-filters="sRGB"
+    >
+    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+    <feGaussianBlur
+        in="BackgroundImageFix"
+        stdDeviation="20"
+    ></feGaussianBlur>
+    <feComposite
+        in2="SourceAlpha"
+        operator="in"
+        result="effect1_backgroundBlur_114948_40926"
+    ></feComposite>
+    <feBlend
+        in="SourceGraphic"
+        in2="effect1_backgroundBlur_114948_40926"
+        result="shape"
+    ></feBlend>
+    </filter>
+    <radialGradient
+    id="background_svg__paint0_radial_114948_40926"
+    cx="0"
+    cy="0"
+    r="1"
+    gradientUnits="userSpaceOnUse"
+    gradientTransform="matrix(-44.61529 480 -346.21069 -32.17977 215.897 71.667)"
+    >
+    <stop stop-color="#FDF8FF" stop-opacity="0.68"></stop>
+    <stop offset="1" stop-color="#E4EDFF"></stop>
+    </radialGradient>
+    <radialGradient
+    id="background_svg__paint1_radial_114948_40926"
+    cx="0"
+    cy="0"
+    r="1"
+    gradientUnits="userSpaceOnUse"
+    gradientTransform="rotate(95.132 78.613 130.776) scale(498.799 347.802)"
+    >
+    <stop stop-color="#FDF8FF" stop-opacity="0.68"></stop>
+    <stop offset="1" stop-color="#E4EDFF"></stop>
+    </radialGradient>
+    <linearGradient
+    id="background_svg__paint2_linear_114948_40926"
+    x1="199.467"
+    y1="-171.5"
+    x2="203.308"
+    y2="214.462"
+    gradientUnits="userSpaceOnUse"
+    >
+    <stop stop-color="#7084FF"></stop>
+    <stop offset="1" stop-color="#fff" stop-opacity="0"></stop>
+    </linearGradient>
+    <clipPath id="background_svg__clip0_114948_40926">
+    <path
+        fill="#fff"
+        transform="matrix(1 0 0 -1 0 600)"
+        d="M0 0h400v600H0z"
+    ></path>
+    </clipPath>
+</defs>
+</svg>

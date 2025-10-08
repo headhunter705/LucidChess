@@ -61,13 +61,17 @@ const ROOMS = [
 const RoomsScreen = () => {
     const navigate = useNavigate();
     const { state } = useLocation();
-    const [ socket, setSocket ] = useState();
+    // const [ socket, setSocket ] = useState();
 
-    const updateSocket = store( state => state.updateSocket );
+    // const updateSocket = store( state => state.updateSocket );
 
     const onClickRoom = (roomName) => {
         if( roomName !== 'Classic Room' )
             return;
+
+        navigate('/connect');
+        
+        return;
 
         const data = {};
         data.roomName = roomName;
@@ -75,7 +79,7 @@ const RoomsScreen = () => {
         data.friendMatch = state.friendMatch;
 
         if( !state.friendMatch ) {
-            socket.emit( socketEvents['CS_MatchPlayLogin'], data );
+            // socket.emit( socketEvents['CS_MatchPlayLogin'], data );
 
             // const stateData = {
             //     mode: gameModes['P2P'],
@@ -90,7 +94,7 @@ const RoomsScreen = () => {
             //     navigate('/connect', { state: { ...stateData } });
             // }
         } else {
-            socket.emit( socketEvents['CS_CreateRoom'], data );
+            // socket.emit( socketEvents['CS_CreateRoom'], data );
         }
     }
 
@@ -114,12 +118,12 @@ const RoomsScreen = () => {
     }
 
     useEffect(() => {
-        const skt = io.connect(`http://${window.location.hostname}:${socketServerPort}`);
-        setSocket( skt );
+        // const skt = io.connect(`http://${window.location.hostname}:${socketServerPort}`);
+        // setSocket( skt );
 
-        skt.on( socketEvents['SC_RoomCreated'], (params) => handleRoomCreated(params) );
+        // skt.on( socketEvents['SC_RoomCreated'], (params) => handleRoomCreated(params) );
 
-        updateSocket( skt );
+        // updateSocket( skt );
     }, []);
 
     return (

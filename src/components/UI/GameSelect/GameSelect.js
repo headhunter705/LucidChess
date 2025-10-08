@@ -46,7 +46,7 @@ export const GameSelect = () => {
             <div className="u-item-text">Match with Computer</div>
           </div>
         </div>
-        <div className="u-ribbon1" onClick={ () => { window.openMetaMaskModal()} }>Connect Wallet</div>
+        {/* <div className="u-ribbon1" onClick={ () => { navigate('/connect')} }>Connect Wallet</div> */}
       </div>
     </div>
   );

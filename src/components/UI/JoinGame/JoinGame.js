@@ -26,37 +26,37 @@ export const JoinGame = () => {
 		data.friendMatch = true;
 		data.roomId = secretKey;
 
-		socket.emit( socketEvents['CS_JoinRoom'], data );
+		// socket.emit( socketEvents['CS_JoinRoom'], data );
     }
 
-	const handleJoinRoom = ( params ) => {
-		const { roomName, roomKey } = params;
+	// const handleJoinRoom = ( params ) => {
+	// 	const { roomName, roomKey } = params;
 		
-		const stateData = {
-			mode: gameModes['P2P'],
-			friendMatch: true,
-			username: name,
-			userType: userTypes['joiner'],
-			roomId: secretKey,
-			roomName: roomName,
-			roomKey: roomKey,
-		}
+	// 	const stateData = {
+	// 		mode: gameModes['P2P'],
+	// 		friendMatch: true,
+	// 		username: name,
+	// 		userType: userTypes['joiner'],
+	// 		roomId: secretKey,
+	// 		roomName: roomName,
+	// 		roomKey: roomKey,
+	// 	}
 
-		if (roomName === 'Classic Room') {
-            navigate('/gameScene', { state: { ...stateData } });
-        } else {
-            navigate('/connect', { state: { ...stateData } });
-        }
-	}
+	// 	if (roomName === 'Classic Room') {
+    //         navigate('/gameScene', { state: { ...stateData } });
+    //     } else {
+    //         navigate('/connect', { state: { ...stateData } });
+    //     }
+	// }
 
-	useEffect(() => {
-        const skt = io.connect(`http://${window.location.hostname}:${socketServerPort}`);
-        setSocket( skt );
+	// useEffect(() => {
+    //     const skt = io.connect(`http://${window.location.hostname}:${socketServerPort}`);
+    //     setSocket( skt );
 
-        skt.on( socketEvents['SC_JoinRoom'], (params) => handleJoinRoom(params) );
+    //     skt.on( socketEvents['SC_JoinRoom'], (params) => handleJoinRoom(params) );
 
-		updateSocket( skt );
-    }, []);
+	// 	updateSocket( skt );
+    // }, []);
 
     return (
 		<div className="JoinGame">

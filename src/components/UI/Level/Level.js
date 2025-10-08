@@ -19,24 +19,27 @@ export const Level = () => {
 						<div className="u-table-wrap">
 							<div className="u-row">
 								<div className="u-item-container">
-									<button className="u-item" onClick={ () => { alert('Connect Wallet please!') } }>AI MonKey</button>
+									<button className="u-item" onClick={ () => { navigate('/connect') } }>AI MonKey</button>
 								</div>
+								{/* <div className="u-item-container">
+									<button className="u-item" onClick={ () => machinePlayAction(0)}>AI MonKey</button>
+								</div> */}
 								<div className="u-item-container">
-									<button className="u-item" onClick={ () => { alert('Connect Wallet please!')} }>Beginner</button>
+									<button className="u-item" onClick={ () => { navigate('/connect')} }>Beginner</button>
 								</div>
 							</div>
 							<div className="u-row">
 								<div className="u-item-container">
-									<button className="u-item" onClick={ () => { alert('Connect Wallet please!')} }>Intermediate</button>
+									<button className="u-item" onClick={ () => { navigate('/connect')} }>Intermediate</button>
 								</div>
 								<div className="u-item-container">
-									<button className="u-item" onClick={ () => { alert('Connect Wallet please!')} }>Advanced</button>
+									<button className="u-item" onClick={ () => { navigate('/connect')} }>Advanced</button>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div className="u-ribbon1" onClick={ () => { window.openMetaMaskModal()} }>Connect Wallet</div>
+				{/* <div className="u-ribbon1" onClick={ () => { navigate('/connect')} }>Connect Wallet</div> */}
 			</div>
 		</div>
     );

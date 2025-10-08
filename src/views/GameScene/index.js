@@ -15,6 +15,7 @@ export const GameScene = () => {
     const color = [ 'white', 'black' ];
     const side = location.state.mode === gameModes['P2E'] ? color[getRandomVal(2)] : null;
     
+    // const side = null;
     const socket = store( state => state.socket );
 
     return (

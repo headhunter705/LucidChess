@@ -1,0 +1,55 @@
+@font-face {
+  src: url(../fonts/Roboto/roboto-bold.woff2) format("woff2");
+  font-display: block;
+  font-style: normal;
+  font-weight: 700;
+  font-family: Roboto;
+}
+@font-face {
+  src: url(../fonts/Roboto/roboto-medium.woff2) format("woff2");
+  font-display: block;
+  font-style: normal;
+  font-weight: 500;
+  font-family: Roboto;
+}
+@font-face {
+  src: url(../fonts/Roboto/roboto-regular.woff2) format("woff2");
+  font-display: block;
+  font-style: normal;
+  font-weight: 400;
+  font-family: Roboto;
+}
+
+.rabby-unlock {
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Roboto, sans-serif!important;
+}
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.fade-in-down {
+  animation: fadeInDown 0.3s ease-out forwards;
+}
+
+.fade-out-up {
+  animation: fadeOutUp 0.3s ease-in forwards;
+}

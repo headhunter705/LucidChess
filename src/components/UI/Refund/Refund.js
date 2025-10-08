@@ -14,8 +14,8 @@ export const Refund = ({ show, msg, hideAction, onClickRefund }) => {
       <div className="refund-container">
         <div className="refund-container-msg">{msg}</div>
         <div className="refund-container-btn_group">
-          <div className="refund-container-btn_group-yes" onClick={onClickRefund}>Refund</div>
-          <div className="refund-container-btn_group-no" onClick={hideAction}>Keep finding</div>
+          <div className="refund-container-btn_group-yes" onClick={onClickRefund}>Cancel</div>
+          <div className="refund-container-btn_group-no" onClick={hideAction}>Loading</div>
         </div>
       </div>
     </Modal>

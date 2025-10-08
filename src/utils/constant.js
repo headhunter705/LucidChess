@@ -146,3 +146,9 @@ export const heroItems = {
 };
 
 export const timeLimit = 30;
+
+export const wallet_type = {
+    metamask: 1,
+    phantom: 2,
+    rabby: 3
+}

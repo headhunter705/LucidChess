@@ -5,7 +5,7 @@ import star_none from "../../../assets/img/star_none.png";
 import { useEffect, useRef, useState } from "react";
 import Refund from "../Refund/Refund";
 
-const starArray = [0, 1, 2, 3, 4, 5];
+const starArray = [1, 2, 3, 4, 5];
 
 export const Loading = ({ title, onClickRefund, roomName }) => {
   const [currentTime, setCurrentTime] = useState(0);
@@ -15,11 +15,19 @@ export const Loading = ({ title, onClickRefund, roomName }) => {
   useEffect(() => {
     timeInterval.current = setInterval(() => {
       setCurrentTime((prev) => prev + 1);
-      if (currentTime > 10) {
-        if(roomName != "Classic Room") setRefund(true);
-        setCurrentTime(0);
+      
+      if (currentTime > Math.floor(Math.random() % 6) + 2) {
+        if(roomName != "Classic Room") {
+          
+          setTimeout(() => {
+            // setCurrentTime(0);
+            setRefund(true);
+          }, 2000);
+          
+        }
+        
       }
-    }, 1000);
+    }, 500);
 
     return () => clearInterval(timeInterval.current);
   });
@@ -33,7 +41,9 @@ export const Loading = ({ title, onClickRefund, roomName }) => {
               key={`star_${idx}`}
               className="star"
               src={
-                idx <= currentTime % starArray.length ? star_full : star_none
+                currentTime % (starArray.length + 1) > idx
+                  ? star_full
+                  : star_none
               }
               alt="pic"
             />

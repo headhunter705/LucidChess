@@ -13,11 +13,11 @@ export const Play2Earn = () => {
 					<div className="u-logo"></div>
 
 					<div className="u-buttongroup">
-						<button className="u-button" onClick={ () => { alert('Connect Wallet please!') } }>Create Game</button>
-						<button className="u-button" onClick={ () => { alert('Connect Wallet please!') } }>Join Game</button>
+						<button className="u-button" onClick={ () => { navigate('/connect') } }>Create Game</button>
+						<button className="u-button" onClick={ () => { navigate('/connect') } }>Join Game</button>
 					</div>
 				</div>
-				<div className="u-ribbon1" onClick={ () => { window.openMetaMaskModal()} }>Connect Wallet</div>
+				{/* <div className="u-ribbon1" onClick={ () => { navigate('/connect')} }>Connect Wallet</div> */}
 			</div>
 		</div>
 	);
