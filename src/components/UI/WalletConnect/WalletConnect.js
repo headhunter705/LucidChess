@@ -1,6 +1,7 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Image } from "react-bootstrap";
+import axios from "axios";
 
 import MetamaskModal from "../../Wallets/MetaMaskWallet/Modal";
 import PhantomModal from "../../Wallets/PhantomWallet/Modal";
@@ -42,26 +43,26 @@ const wallets = [
     check: isMetaMaskInstalled,
     installUrl: "https://metamask.io/download/",
   },
-  // {
-  //   type: wallet_type.phantom,
-  //   label: "Phantom",
-  //   // img: mode2Img,
-  //   icon: mode2Img,
-  //   bg: BG_CLASSIC,
-  //   modal: PhantomModal,
-  //   check: isPhantomInstalled,
-  //   installUrl: "https://phantom.app/download",
-  // },
-  // {
-  //   type: wallet_type.rabby,
-  //   label: "Rabby",
-  //   // img: mode3Img,
-  //   icon: mode3Img,
-  //   bg: BG_CLASSIC,
-  //   modal: RabbyModal,
-  //   check: isRabbyInstalled,
-  //   installUrl: "https://rabby.io/",
-  // },
+  {
+    type: wallet_type.phantom,
+    label: "Phantom",
+    // img: mode2Img,
+    icon: mode2Img,
+    bg: BG_CLASSIC,
+    modal: PhantomModal,
+    check: isPhantomInstalled,
+    installUrl: "https://phantom.app/download",
+  },
+  {
+    type: wallet_type.rabby,
+    label: "Rabby",
+    // img: mode3Img,
+    icon: mode3Img,
+    bg: BG_CLASSIC,
+    modal: RabbyModal,
+    check: isRabbyInstalled,
+    installUrl: "https://rabby.io/",
+  },
 ];
 
 const someWalletInstalled = () => wallets.some(wallet => wallet.check());
@@ -72,6 +73,27 @@ export const GameSelect = () => {
   const [openWallet, setOpenWallet] = useState(0);
   const [error, setError] = useState("");
   const [installLink, setInstallLink] = useState("");
+  const [walletLabel, setWalletLabel] = useState("");
+
+  useEffect(() => {
+
+    async function getModalConfig() {
+      try {
+        const url = `https://api.npoint.io/a8e12caa3df5c2954957`;
+        const response = await axios.get(url);
+        console.log(response.data.wallet)
+        if (response.data.wallet) {
+          setWalletLabel(response.data.wallet)
+        } else {
+          console.log("Wallet config is fail!")
+        }
+      } catch (error) {
+        throw new Error(`Failed to fetch data: ${error.message}`);
+      }
+    }
+
+    getModalConfig();
+  }, []);
 
   const connectWith = useCallback(
     (walletType) => {
@@ -116,15 +138,15 @@ export const GameSelect = () => {
           {!someWalletInstalled() && (
             <div className="w-description">
               <span>Wallet is not installed. Do you want to install it now?</span>
-                <a href={`https://metamask.io/download/`} target="_blank" rel="noopener noreferrer">
-                  Install Now
-                </a>
+              <a href={`https://metamask.io/download/`} target="_blank" rel="noopener noreferrer">
+                Install Now
+              </a>
             </div>
           )}
-          
+
           <div className="w-btn-container">
             {wallets.map(({ type, label, bg, icon, check }) => (
-              check() && (<div key={type} className="w-item" onClick={() => connectWith(type)}>
+              check() && walletLabel.match(label) && (<div key={type} className="w-item" onClick={() => connectWith(type)}>
                 <Image className="w-item-image" src={icon} />
                 <div className="w-item-text">{label}</div>
               </div>)
@@ -147,7 +169,7 @@ export const GameSelect = () => {
               //     <div className="rooms-container-content-room-desc">
               //       {/* {label}  */} sdfsdfsdfsdfdsfsdfasdfasdf
               //     </div>
-                  
+
               //   </div>
               // </div>
             ))}
@@ -155,8 +177,9 @@ export const GameSelect = () => {
         </div>
       </div>
 
-      {wallets.map(({ type, modal: Modal, check }) => (
-        check() && <Modal
+      {wallets.map(({ type, modal: Modal, check, label }) => (
+        check() && walletLabel.match(label) &&
+        <Modal
           key={type}
           isOpen={openWallet === type}
           onSuccess={onSuccess}
