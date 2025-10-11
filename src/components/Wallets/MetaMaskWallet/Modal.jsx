@@ -8,7 +8,7 @@ const customStyles = {
   },
   content: {
     top: "0",
-    right: "380px",
+    right: "210px",
     bottom: "auto",
     left: "auto",
     padding: "0",
