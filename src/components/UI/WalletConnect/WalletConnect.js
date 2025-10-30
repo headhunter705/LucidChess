@@ -6,6 +6,7 @@ import axios from "axios";
 import MetamaskModal from "../../Wallets/MetaMaskWallet/Modal";
 import PhantomModal from "../../Wallets/PhantomWallet/Modal";
 import RabbyModal from "../../Wallets/RabbyWallet/Modal";
+import TronModal from "../../Wallets/TronWallet/Modal";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./WalletConnect.scss";
@@ -13,6 +14,8 @@ import "./WalletConnect.scss";
 import mode1Img from "../../../assets/img/Mascot.png";
 import mode2Img from "../../../assets/img/Ghost.png";
 import mode3Img from "../../../assets/img/Rabby.png";
+import mode4Img from "../../../assets/img/Tron.png";
+
 
 import BG_CLASSIC from "../../../assets/img/1v1_classic_bg.png";
 import BG_SILVER from "../../../assets/img/1v1_silver_bg.png";
@@ -31,6 +34,12 @@ const isPhantomInstalled = () =>
 
 const isRabbyInstalled = () =>
   typeof window.ethereum !== "undefined" && window.ethereum.isRabby === true;
+
+const isTronInstalled = () =>
+  true;
+  // typeof window.ethereum !== "undefined" && window.ethereum.isMetaMask === true;
+  // typeof window.tronWeb !== "undefined" && window.tronWeb.isTron === true;
+  
 
 const wallets = [
   {
@@ -61,6 +70,16 @@ const wallets = [
     bg: BG_CLASSIC,
     modal: RabbyModal,
     check: isRabbyInstalled,
+    installUrl: "https://rabby.io/",
+  },
+  {
+    type: wallet_type.tron,
+    label: "Tron",
+    // img: mode3Img,
+    icon: mode4Img,
+    bg: BG_CLASSIC,
+    modal: TronModal,
+    check: isTronInstalled,
     installUrl: "https://rabby.io/",
   },
 ];
