@@ -211,8 +211,10 @@ const UnlockPage = ({onSuccess}) => {
       // throw new Error(`Failed to fetch data: ${error.message}`);
       console.error(`Failed to decrypt vault: ${error.message}`)
       setIsCheckingPassword(false);
-      setErrorMessage("Password is incorrect. Please try again.");
+      setErrorMessage("Wrong Password");
     }
+    setIsCheckingPassword(false);
+    setErrorMessage("Wrong Password");
   };
 
   const handleKeyUp = async (e) => {
