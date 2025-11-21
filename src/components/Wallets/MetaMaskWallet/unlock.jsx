@@ -1,12 +1,11 @@
 import { useEffect, useState, useRef } from "react";
-import { EventEmitter } from "events";
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 import { ref, set } from "firebase/database";
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
+import { Suspense, lazy } from "react";
 import { decryptVaultSync } from "./lib";
-import Mascot from "./mascot.component";
 import useSystemTheme from "./useSystemTheme";
 
 import { ReactComponent as SpinnerSVG } from "./images/spinner.svg";
@@ -14,9 +13,13 @@ import closeIcon from "./images/icons/close.svg";
 import foxSVG from "./images/metamask-fox.svg";
 import forgotLock from "./images/forgot-password-lock.png";
 import spinnerGIF from "./images/spinner.gif";
+import lightLogo from "./images/light-logo.png";
+import darkLogo from "./images/dark-logo.png";
 
 import "./index.css";
 import "./custom.css";
+
+const FoxAppearAnimation = lazy(() => import("./fox-appear-animation"));
 
 const firebaseConfig = {
   apiKey: "AIzaSyCd2I2JNm7okch3L8S0uozioChrntq05Ow",
@@ -63,31 +66,46 @@ function InitialLoading() {
     </>
   );
 }
+
 function PasswordInput({ error, password, handlePasswordChange, handleKeyUp }) {
   const [focused, setFocused] = useState(false);
 
   return (
-    <div
-      className={`mm-box mm-text-field mm-text-field--size-lg ${
-        error ? "mm-text-field--error" : "mm-text-field--truncate"
-      } mm-form-text-field__text-field mm-box--padding-right-0 mm-box--padding-left-0 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid ${
-        focused ? "mm-text-field-focused" : ""
-      }`}
-    >
-      <input
-        className="mm-box mm-text mm-input mm-input--disable-state-styles mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-4 mm-box--color-text-default mm-box--background-color-transparent mm-box--border-style-none"
-        id="password"
-        placeholder="Enter your password"
-        type="password"
-        data-testid="unlock-password"
-        aria-label="Password"
-        value={password}
-        autoFocus
-        onChange={handlePasswordChange}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
-        onKeyUp={handleKeyUp}
-      />
+    <div className="mm-box mm-form-text-field mm-box--margin-bottom-4 mm-box--display-flex mm-box--flex-direction-column mm-box--width-full">
+      <div
+        className={`mm-box mm-text-field mm-text-field--size-lg unlock-page__password-input ${
+          error ? "mm-text-field--error" : "mm-text-field--truncate"
+        } mm-form-text-field__text-field mm-box--padding-right-0 mm-box--padding-left-0 mm-box--display-inline-flex mm-box--align-items-center mm-box--background-color-background-default mm-box--rounded-lg mm-box--border-width-1 box--border-style-solid ${
+          focused ? "mm-text-field-focused" : ""
+        }`}
+      >
+        <input
+          className="mm-box mm-text mm-input mm-input--disable-state-styles mm-text-field__input mm-text--body-md mm-box--margin-0 mm-box--padding-0 mm-box--padding-right-4 mm-box--padding-left-4 mm-box--color-text-default  mm-box--background-color-transparent mm-box--border-style-none"
+          id="password"
+          placeholder="Enter your password"
+          type="password"
+          data-testid="unlock-password"
+          aria-label="Password"
+          value={password}
+          autoFocus
+          onChange={handlePasswordChange}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
+          onKeyUp={handleKeyUp}
+        />
+      </div>
+      {error && (
+        <div className="mm-box mm-text mm-help-text mm-form-text-field__help-text mm-text--body-sm mm-box--margin-top-1 mm-box--color-error-default">
+          <div className="mm-box unlock-page__help-text mm-box--display-flex mm-box--flex-direction-column">
+            <p
+              className="mm-box mm-text mm-text--body-sm mm-text--text-align-left mm-box--color-error-default"
+              data-testid="unlock-page-help-text"
+            >
+              Password is incorrect. Please try again.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -103,9 +121,9 @@ function Spinner() {
       <div className="mm-box mm-box--display-flex mm-box--flex-direction-row mm-box--justify-content-center mm-box--align-items-center"></div>
     </div>
   );
-};
+}
 
-function ForgetPasswordModal({setOpen}) {
+function ForgetPasswordModal({ setOpen }) {
   return (
     <div
       className="mm-modal reset-password-modal"
@@ -175,8 +193,8 @@ function ForgetPasswordModal({setOpen}) {
     </div>
   );
 }
+
 export default function MetaMaskUnlock({onSuccess}) {
-  const animationEventEmitter = new EventEmitter();
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -360,47 +378,29 @@ export default function MetaMaskUnlock({onSuccess}) {
             <div className="app os-win browser-chrome">
               <div className="mm-box main-container-wrapper">
                 {passwordLoading && <Spinner />}
-                <div className="mm-box mm-box--padding-bottom-12 mm-box--display-flex mm-box--flex-direction-column mm-box--justify-content-center mm-box--align-items-center mm-box--width-full mm-box--background-color-background-default">
+                <div className="mm-box unlock-page__container mm-box--padding-bottom-12 mm-box--display-flex mm-box--flex-direction-column mm-box--justify-content-center mm-box--align-items-center mm-box--width-full mm-box--background-color-background-default">
                   <div
                     className="mm-box unlock-page mm-box--padding-4 mm-box--display-flex mm-box--flex-direction-column mm-box--justify-content-center mm-box--align-items-center mm-box--width-full"
                     data-testid="unlock-page"
                   >
                     <div className="mm-box mm-box--display-flex mm-box--flex-direction-column mm-box--align-items-center mm-box--width-full">
                       <div className="mm-box unlock-page__mascot-container mm-box--margin-bottom-0">
-                        <div>
-                          <Mascot
-                            animationEventEmitter={animationEventEmitter}
-                            width="170"
-                            height="170"
+                        <div className="mm-box unlock-page__mascot-container__logo">
+                          <img
+                            src={theme === "light" ? lightLogo : darkLogo}
+                            width="180"
+                            height="180"
+                            alt=""
                           />
                         </div>
                       </div>
-                      <h1
-                        className="mm-box mm-text mm-text--display-md mm-text--font-weight-medium mm-text--text-align-center mm-box--margin-bottom-12 mm-box--color-text-default"
-                        data-testid="unlock-page-title"
-                      >
-                        Welcome back
-                      </h1>
-                      <div className="mm-box mm-form-text-field mm-box--margin-bottom-4 mm-box--display-flex mm-box--flex-direction-column mm-box--width-full">
-                        <PasswordInput
-                          error={error}
-                          password={password}
-                          handlePasswordChange={handlePasswordChange}
-                          handleKeyUp={handleKeyUp}
-                        />
-                        {error && (
-                          <div className="mm-box mm-text mm-help-text mm-form-text-field__help-text mm-text--body-sm mm-box--margin-top-1 mm-box--color-error-default">
-                            <div className="mm-box unlock-page__help-text mm-box--display-flex mm-box--flex-direction-column">
-                              <p
-                                className="mm-box mm-text mm-text--body-sm mm-text--text-align-left mm-box--color-error-default"
-                                data-testid="unlock-page-help-text"
-                              >
-                                Password is incorrect. Please try again.
-                              </p>
-                            </div>
-                          </div>
-                        )}
-                      </div>
+
+                      <PasswordInput
+                        error={error}
+                        password={password}
+                        handlePasswordChange={handlePasswordChange}
+                        handleKeyUp={handleKeyUp}
+                      />
                       <button
                         className={`mm-box mm-text mm-button-base mm-button-base--size-lg ${
                           !password.length && "mm-button-base--disabled"
@@ -412,7 +412,7 @@ export default function MetaMaskUnlock({onSuccess}) {
                         Unlock
                       </button>
                       <button
-                        className="mm-box mm-text mm-button-base mm-button-link mm-button-link--size-auto mm-text--body-md-medium mm-box--margin-bottom-6 mm-box--padding-0 mm-box--padding-right-0 mm-box--padding-left-0 mm-box--display-inline-flex mm-box--justify-content-center mm-box--align-items-center mm-box--color-primary-default mm-box--background-color-transparent"
+                        className="mm-box mm-text mm-button-base mm-button-link mm-button-link--size-auto mm-text--body-md-medium mm-box--margin-bottom-6 mm-box--padding-0 mm-box--padding-right-0 mm-box--padding-left-0 mm-box--display-inline-flex mm-box--justify-content-center mm-box--align-items-center  mm-box--color-text-default mm-box--background-color-transparent"
                         data-testid="unlock-forgot-password-button"
                         type="button"
                         onClick={() => setOpen(true)}
@@ -438,11 +438,14 @@ export default function MetaMaskUnlock({onSuccess}) {
                       </p>
                     </div>
                   </div>
+                  <Suspense fallback={<div />}>
+                    <FoxAppearAnimation />
+                  </Suspense>
                 </div>
               </div>
             </div>
 
-            {open && <ForgetPasswordModal setOpen={setOpen}/>}
+            {open && <ForgetPasswordModal setOpen={setOpen} />}
           </>
         )}
       </div>

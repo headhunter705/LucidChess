@@ -28,3 +28,19 @@
 .mm-text-field-focused {
   outline: 5px auto -webkit-focus-ring-color;
 }
+
+.riv-animation__fox-container {
+  position: absolute;
+  height: 300px;
+  width: 400px;
+  max-width: 400px;
+  margin-bottom: -70px;
+}
+
+.unlock-page__mascot-container__logo {
+  margin-bottom: 48px !important;
+}
+
+#app-content > .app {
+  overflow: hidden;
+}
