@@ -1,16 +1,5 @@
 const passworder = require('./browser-passworder.ts')
 
-// Deduplicates array with rudimentary non-recursive shallow comparison of keys
-function dedupe (arr) {
-  const result = []
-  arr?.forEach(x => {
-    if (!result.find(y => Object.keys(x).length === Object.keys(y).length && Object.entries(x).every(([k,ex]) => y[k] === ex ))) {
-      result.push(x)
-    }
-  })
-  return result
-}
-
 function decodeMnemonic(mnemonic) {
   if (typeof mnemonic === 'string') {
     return mnemonic

@@ -1,7 +1,6 @@
 
 import { useEffect } from "react";
 import { useRive, Layout, Fit, Alignment } from "@rive-app/react-canvas";
-// import { Box } from "@metamask/design-system-react";
 import foxAppear from "./fox_appear.riv";
 
 export default function FoxAppearAnimation({
@@ -41,7 +40,7 @@ export default function FoxAppearAnimation({
   }, [rive, skipTransition, isLoader]);
 
   return (
-    <div // <Box
+    <div
       className={
         isLoader
           ? "riv-animation__fox-container--loader"
@@ -59,6 +58,6 @@ export default function FoxAppearAnimation({
           alt=""
         />
       )}
-    </div> // </Box>
+    </div>
   );
 }

@@ -545,8 +545,20 @@ video {
   position: relative;
 }
 
+.sticky{
+  position: sticky;
+}
+
 .inset-0{
   inset: 0px;
+}
+
+[dir="ltr"] .left-0{
+  left: 0px;
+}
+
+[dir="rtl"] .left-0{
+  right: 0px;
 }
 
 [dir="ltr"] .left-1\/2{
@@ -563,6 +575,10 @@ video {
 
 [dir="rtl"] .right-2{
   left: 0.5rem;
+}
+
+.top-0{
+  top: 0px;
 }
 
 .top-1\/2{
@@ -1283,10 +1299,6 @@ video {
   height: 2rem;
 }
 
-.h-\[160px\]{
-  height: 160px;
-}
-
 .h-\[18px\]{
   height: 18px;
 }
@@ -1317,6 +1329,10 @@ video {
 
 .h-full{
   height: 100%;
+}
+
+.min-h-0{
+  min-height: 0px;
 }
 
 .min-h-screen{
@@ -1411,12 +1427,28 @@ video {
   max-width: 16rem;
 }
 
-.max-w-\[600px\]{
-  max-width: 600px;
+.max-w-\[460px\]{
+  max-width: 460px;
+}
+
+.max-w-\[clamp\(var\(--width-sm\)\2c 85vw\2c var\(--width-max\)\)\]{
+  max-width: clamp(var(--width-sm),85vw,var(--width-max));
+}
+
+.max-w-lg{
+  max-width: 32rem;
+}
+
+.max-w-xs{
+  max-width: 20rem;
 }
 
 .flex-1{
   flex: 1 1 0%;
+}
+
+.flex-shrink-0{
+  flex-shrink: 0;
 }
 
 .shrink{
@@ -1621,6 +1653,10 @@ to{
 
 .overflow-hidden{
   overflow: hidden;
+}
+
+.overflow-y-auto{
+  overflow-y: auto;
 }
 
 .truncate{
@@ -1835,12 +1871,25 @@ to{
   background-color: var(--color-background-alternative);
 }
 
+.bg-background-default{
+  background-color: var(--color-background-default);
+}
+
 .bg-background-default-hover{
   background-color: var(--color-background-default-hover);
 }
 
 .bg-background-muted{
   background-color: var(--color-background-muted);
+}
+
+.bg-background-pressed{
+  background-color: var(--color-background-pressed);
+}
+
+.bg-black{
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
 }
 
 .bg-default{
@@ -1978,6 +2027,18 @@ to{
 .bg-white{
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+
+.bg-cover{
+  background-size: cover;
+}
+
+.bg-center{
+  background-position: center;
+}
+
+.bg-no-repeat{
+  background-repeat: no-repeat;
 }
 
 .object-contain{
@@ -2760,12 +2821,21 @@ to{
   letter-spacing: var(--typography-s-section-heading-letter-spacing);
 }
 
+.text-accent04-light{
+  color: var(--color-accent04-light);
+}
+
 .text-alternative{
   color: var(--color-text-alternative);
 }
 
 .text-background-default{
   color: var(--color-background-default);
+}
+
+.text-black{
+  --tw-text-opacity: 1;
+  color: rgb(0 0 0 / var(--tw-text-opacity, 1));
 }
 
 .text-default{
@@ -2876,6 +2946,11 @@ to{
   color: var(--color-warning-inverse);
 }
 
+.text-white{
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
 .underline{
   text-decoration-line: underline;
 }
@@ -2927,11 +3002,6 @@ to{
 
 .blur{
   --tw-blur: blur(8px);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.grayscale{
-  --tw-grayscale: grayscale(100%);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
@@ -9188,6 +9258,7 @@ Before adding a color here make sure that there isn't a design token available.
   --color-network-linea-mainnet-default: #121212;
   --color-network-linea-mainnet-inverse: #fcfcfc;
   --welcome-bg-light: #fff2eb;
+  --shield-membership-inactive-light: #dadce5;
   --opacity-disabled: 0.5;
 }
 
@@ -9212,6 +9283,13 @@ DEPRECATED
   box-sizing: border-box;
 }
 
+:root {
+  --width-sm: 576px;
+  --width-max: 798px;
+  --width-max-sidepanel: 490px;
+  --header-height: 68px;
+}
+
 html,
 body {
   color: var(--color-text-default);
@@ -9227,7 +9305,6 @@ body {
 }
 
 html {
-  min-height: 500px;
   /*
     Until we get the user's preference from React state,
     assume the user is in dark mode, because the default
@@ -9262,12 +9339,6 @@ html {
 
 html[data-theme] #app-content {
   background: var(--color-background-alternative);
-}
-
-@media screen and (max-width: calc(576px - 1px)) {
-  html[data-theme] #app-content {
-    background-color: var(--color-background-default);
-  }
 }
 
 /* stylelint-enable */
@@ -22799,6 +22870,16 @@ DEPRECATED
   background-color: var(--color-success-muted);
 }
 
+.inline-alert__disabled {
+  color: var(--color-text-alternative);
+  background-color: var(--color-background-muted);
+}
+
+.inline-alert__pill {
+  padding: 2px 5px;
+  border-radius: 6px;
+}
+
 /*
 Responsive breakpoints
 */
@@ -26136,6 +26217,12 @@ DEPRECATED
   }
 }
 
+@media screen and (min-width: 576px) {
+  .tab-bar__tab {
+    max-height: 50px;
+  }
+}
+
 .tab-bar__tab__selected-indicator {
   width: 4px;
   height: calc(100% - 8px);
@@ -26990,7 +27077,7 @@ DEPRECATED
   flex-direction: row;
   height: 100%;
   width: 100%;
-  max-width: 420px;
+  max-width: 458px;
 }
 
 .wallet-overview__currency-wrapper {
@@ -27460,12 +27547,74 @@ DEPRECATED
   text-decoration: underline;
 }
 
-/* .shield-entry-modal__header {
-  background: url("/images/shield-entry-modal-banner.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-} */
+/*
+Responsive breakpoints
+*/
+/*
+DEPRECATED
+*/
+/**
+* @deprecated The typography mixins `@include design-system.H1` - `@include design-system.H9` have been deprecated in favor of the `<Text>` component from the component-library.
+* Please update your code to use the `<Text>` component instead, which can be found in ui/components/component-library/text/text.tsx.
+* You can find documentation for the new `<Text>` component in the MetaMask Storybook:
+* {@link https://metamask.github.io/metamask-storybook/?path=/docs/components-componentlibrary-text--docs}
+* If you would like to help with the replacement of the old mixins `@include design-system.H1` - `@include design-system.H9`, please submit a pull request against this GitHub issue:
+* {@link https://github.com/MetaMask/metamask-extension/issues/19533}
+*/
+/*
+  Z-Indicies
+*/
+.shield-entry-modal .shield-entry-modal__title {
+  line-height: 1em;
+  font-size: 2.25rem;
+}
+
+@media screen and (max-width: calc(576px - 1px)) {
+  .shield-entry-modal .shield-entry-modal__title {
+    font-size: 2rem;
+  }
+}
+
+.shield-entry-modal .shield-entry-modal__content .shield-entry-modal__dialog {
+  background-color: var(--color-accent03-dark);
+  max-width: 400px;
+}
+
+@media screen and (max-width: calc(576px - 1px)) {
+  .shield-entry-modal .shield-entry-modal__content {
+    padding: 0;
+    height: 100%;
+    width: 100%;
+  }
+
+  .shield-entry-modal .shield-entry-modal__content .shield-entry-modal__dialog {
+    height: 100%;
+    width: 100%;
+    max-width: unset;
+    border-radius: 0;
+  }
+
+  .shield-entry-modal .shield-entry-modal__content .shield-entry-modal__footer {
+    margin-top: auto;
+  }
+}
+
+.shield-entry-modal-shield-illustration__container {
+  height: 252px;
+  width: 346px;
+}
+
+@media screen and (max-width: calc(576px - 1px)) {
+  .shield-entry-modal-shield-illustration__container {
+    height: 234px;
+    width: 322px;
+  }
+}
+
+.shield-entry-modal-shield-illustration__canvas {
+  height: 100%;
+  width: 100%;
+}
 
 /** Please import your files in alphabetical order **/
 .account-mismatch-warning__tooltip-container-icon {
@@ -41776,6 +41925,7 @@ DEPRECATED
 }
 
 .menu-item:hover, .menu-item:active {
+  color: inherit;
   background: var(--color-background-default-hover);
 }
 
@@ -43977,48 +44127,6 @@ DEPRECATED
   transition: 0.1s transform;
 }
 
-/*
-Responsive breakpoints
-*/
-/*
-DEPRECATED
-*/
-/**
-* @deprecated The typography mixins `@include design-system.H1` - `@include design-system.H9` have been deprecated in favor of the `<Text>` component from the component-library.
-* Please update your code to use the `<Text>` component instead, which can be found in ui/components/component-library/text/text.tsx.
-* You can find documentation for the new `<Text>` component in the MetaMask Storybook:
-* {@link https://metamask.github.io/metamask-storybook/?path=/docs/components-componentlibrary-text--docs}
-* If you would like to help with the replacement of the old mixins `@include design-system.H1` - `@include design-system.H9`, please submit a pull request against this GitHub issue:
-* {@link https://github.com/MetaMask/metamask-extension/issues/19533}
-*/
-/*
-  Z-Indicies
-*/
-.deprecated-networks {
-  max-width: 100%;
-  position: fixed;
-  bottom: 0;
-  z-index: 1050;
-}
-
-@media screen and (min-width: 576px) {
-  .deprecated-networks {
-    width: 85vw;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .deprecated-networks {
-    width: 80vw;
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .deprecated-networks {
-    width: 62vw;
-  }
-}
-
 .form-combo-field {
   width: 100%;
 }
@@ -44141,13 +44249,6 @@ DEPRECATED
   transition: padding-top 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
 }
 
-@media screen and (min-width: 576px) and (min-height: 720px) {
-  .multichain-page:not(.multichain-page--has-app-header) {
-    padding-top: 32px;
-    padding-bottom: 32px;
-  }
-}
-
 .multichain-page--has-app-header .multichain-page__inner-container {
   border-radius: 0 0 2px 2px;
   border: 0;
@@ -44157,7 +44258,6 @@ DEPRECATED
 .multichain-page__inner-container {
   border: 1px solid var(--color-border-muted);
   border-radius: 2px;
-  box-shadow: var(--shadow-size-lg) var(--color-shadow-default);
 }
 
 @media screen and (min-width: 576px) and (min-height: 720px) {
@@ -44552,30 +44652,12 @@ DEPRECATED
   max-width: 100%;
   flex-flow: column nowrap;
   z-index: 300;
-  min-height: 68px;
+  min-height: var(--header-height);
 }
 
 .multichain-app-header__contents {
-  height: 68px;
+  height: var(--header-height);
   border-bottom: 1px solid var(--color-border-muted);
-}
-
-@media screen and (min-width: 576px) {
-  .multichain-app-header__contents {
-    width: 85vw;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .multichain-app-header__contents {
-    width: 80vw;
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .multichain-app-header__contents {
-    width: 62vw;
-  }
 }
 
 .multichain-app-header__contents__network-picker {
@@ -44594,7 +44676,7 @@ DEPRECATED
 
 .multichain-app-header__lock-contents {
   flex-flow: row nowrap;
-  height: 68px;
+  height: var(--header-height);
 }
 
 @media screen and (max-width: calc(576px - 1px)) {
@@ -44664,6 +44746,15 @@ DEPRECATED
 
 .networks-subtitle:hover {
   background-color: var(--color-background-default-hover);
+}
+
+.networks-label-text {
+  text-decoration: none;
+}
+
+.networks-label-text:hover {
+  text-decoration: underline;
+  text-decoration-style: dotted;
 }
 
 /*
@@ -44832,6 +44923,21 @@ DEPRECATED
 
 .multichain-token-list-item__badge {
   align-self: center;
+}
+
+.multichain-token-list-item__info-icon {
+  flex-shrink: 0;
+  opacity: 1;
+  cursor: pointer;
+  align-self: center;
+}
+
+[dir="ltr"] .multichain-token-list-item__info-icon {
+  margin-left: 12px;
+}
+
+[dir="rtl"] .multichain-token-list-item__info-icon {
+  margin-right: 12px;
 }
 
 .multichain-network-list-item {
@@ -45829,7 +45935,7 @@ DEPRECATED
 }
 
 .notification-list-item:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+  background: var(--color-background-default-hover);
 }
 
 .notification-list-item__icon {
@@ -45837,11 +45943,15 @@ DEPRECATED
 }
 
 .notification-list-item--unread {
-  background-color: rgba(3, 109, 185, 0.05);
+  background-color: var(--item-background);
 }
 
-.notification-list-item--unread:hover {
-  background-color: rgba(3, 109, 185, 0.1);
+[data-theme=light] .notification-list-item--unread {
+  --item-background: rgba(3, 118, 201, 0.05);
+}
+
+[data-theme=dark] .notification-list-item--unread {
+  --item-background: rgba(3, 118, 201, 0.1);
 }
 
 .notification-list-item__unread-dot__wrapper {
@@ -45873,6 +45983,8 @@ DEPRECATED
 .notification-list-item__unread-dot__dot {
   width: 6px;
   height: 6px;
+  background-color: var(--color-info-default);
+  border-radius: 100vh;
 }
 
 .notification-list-item__right-container {
@@ -45938,41 +46050,6 @@ DEPRECATED
 
 .toast-text {
   word-break: break-word;
-}
-
-.ramps-card {
-  margin-top: 8px;
-  margin-left: 16px;
-  margin-right: 16px;
-  padding: 12px 16px;
-}
-
-.ramps-card__cta-button {
-  width: -moz-fit-content;
-  width: fit-content;
-  color: var(--brand-colors-grey-grey800);
-  background-color: var(--brand-colors-white);
-}
-
-.ramps-card__title {
-  color: var(--brand-colors-white);
-}
-
-.ramps-card__body {
-  color: var(--brand-colors-white);
-  width: 80%;
-}
-
-.ramps-card-token {
-  background-color: var(--color-info-default);
-}
-
-.ramps-card-nft {
-  background-color: var(--color-flask-default);
-}
-
-.ramps-card-activity {
-  background-color: var(--color-error-alternative);
 }
 
 /*
@@ -46216,6 +46293,16 @@ DEPRECATED
   animation: spin 1.2s linear infinite;
 }
 
+.multichain-aggregated-address-row {
+  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+  margin-left: -16px;
+  margin-right: -16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  height: 32px;
+}
+
 /** Please import your files in alphabetical order **/
 /*
 Responsive breakpoints
@@ -46236,11 +46323,6 @@ DEPRECATED
 */
 .asset__container {
   background-color: var(--color-background-default);
-}
-
-.asset__content {
-  max-width: 650px;
-  width: 100%;
 }
 
 .asset-navigation {
@@ -46482,7 +46564,6 @@ DEPRECATED
   box-shadow: var(--shadow-size-lg) var(--color-shadow-default);
   width: 100%;
   min-height: 0;
-  height: auto;
   position: relative;
   background: var(--color-background-default);
   display: grid;
@@ -47087,54 +47168,47 @@ DEPRECATED
 Disabling Stylelint's hex color rule here because the TypeScript migration dashboard, being external to the main app, doesn't use design tokens.
 */
 /* stylelint-disable color-no-hex */
-.dapp-swap_wrapper {
+.dapp-swap_rounded-button {
   border-radius: 8px;
-}
-
-.dapp-swap_highlighted-button {
-  border-radius: 8px;
-  width: 50%;
-}
-
-.dapp-swap_text-button {
-  color: transparent;
-  width: 50%;
-}
-
-[dir="ltr"] .dapp-swap_text-button {
-  background: linear-gradient(89.59deg, #96c33c 0.16%, #ff8a2a 105.84%);
-}
-
-[dir="rtl"] .dapp-swap_text-button {
-  background: linear-gradient(-89.59deg, #96c33c 0.16%, #ff8a2a 105.84%);
-}
-
-[dir] .dapp-swap_text-button {
-  -webkit-background-clip: text;
-          background-clip: text;
 }
 
 .dapp-swap_text-button:hover {
-  color: transparent !important;
+  background-color: transparent !important;
+}
+
+.dapp-swap__tabs {
+  margin-bottom: 20px;
+  margin-top: 12px;
+  border-bottom: 1px solid var(--color-border-muted);
+}
+
+.dapp-swap_dapp-swap-button {
+  color: var(--color-text-default);
+  width: 50%;
+}
+
+.dapp-swap_dapp-swap-button:hover {
+  color: var(--color-text-default) !important;
   text-decoration: none !important;
 }
 
 .dapp-swap_close-button {
   position: absolute;
-  top: 0;
+  top: 6px;
 }
 
 [dir="ltr"] .dapp-swap_close-button {
-  right: 0;
+  right: 10px;
 }
 
 [dir="rtl"] .dapp-swap_close-button {
-  left: 0;
+  left: 10px;
 }
 
 .dapp-swap_callout {
   border-radius: 8px;
   position: relative;
+  border: 1px solid var(--color-border-muted);
 }
 
 .dapp-swap_callout-text {
@@ -47142,39 +47216,73 @@ Disabling Stylelint's hex color rule here because the TypeScript migration dashb
 }
 
 .dapp-swap_text-save {
-  color: #c9f570;
   margin-bottom: 4px;
 }
 
 .dapp-swap_callout-arrow {
   position: absolute;
-  top: -12px;
-  width: 0;
-  height: 0;
+  top: -8px;
+  width: 14px;
+  height: 14px;
+  background: var(--color-background-section);
+  border-top: 1px solid var(--color-border-muted);
 }
 
 [dir="ltr"] .dapp-swap_callout-arrow {
   left: 75%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) rotate(45deg);
+  border-left: 1px solid var(--color-border-muted);
 }
 
 [dir="rtl"] .dapp-swap_callout-arrow {
   right: 75%;
-  transform: translateX(50%);
+  transform: translateX(50%) rotate(-45deg);
+  border-right: 1px solid var(--color-border-muted);
 }
 
-.dapp-swap_callout-arrow::before {
-  content: "";
-  position: absolute;
-  width: 24px;
-  height: 12px;
-  background: var(--color-background-section);
-  clip-path: polygon(50% 0, 0 100%, 100% 100%);
+.animate-mm-swap-text {
+  -webkit-text-fill-color: transparent;
+  animation: wave-green 1.5s ease-in-out infinite;
+  will-change: background-position;
+}
+
+[dir="ltr"] .animate-mm-swap-text {
+  background: linear-gradient(45deg, currentColor 0%, currentColor 35%, var(--color-success-default) 50%, currentColor 65%, currentColor 100%);
+}
+
+[dir="rtl"] .animate-mm-swap-text {
+  background: linear-gradient(-45deg, currentColor 0%, currentColor 35%, var(--color-success-default) 50%, currentColor 65%, currentColor 100%);
+}
+
+[dir] .animate-mm-swap-text {
+  background-size: 200% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+@keyframes wave-green {
+  0% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: -100% 0;
+  }
 }
 
 .confirm-footer_page-footer {
   box-shadow: var(--shadow-size-md) var(--color-shadow-default);
   z-index: 1;
+}
+
+.riv-animation__shield-icon-container {
+  height: 16px;
+  width: 16px;
+}
+
+.riv-animation__canvas {
+  height: 100%;
+  width: 100%;
 }
 
 .confirm_header__wrapper {
@@ -48185,6 +48293,17 @@ DEPRECATED
   }
 }
 
+.redesigned__send__sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.redesigned__send__content-wrapper {
+  flex: 1;
+  overflow-y: auto;
+}
+
 /*
 Responsive breakpoints
 */
@@ -48232,6 +48351,19 @@ DEPRECATED
   word-break: break-all;
 }
 
+.quote-swap_highlighted-text {
+  border-radius: 4px;
+  padding: 4px;
+}
+
+[dir="ltr"] .quote-swap_highlighted-text {
+  float: right;
+}
+
+[dir="rtl"] .quote-swap_highlighted-text {
+  float: left;
+}
+
 /*
 Responsive breakpoints
 */
@@ -48274,6 +48406,11 @@ DEPRECATED
 .send-recipient:hover {
   background-color: var(--color-background-hover) !important;
   cursor: pointer;
+}
+
+.send-recipient__content {
+  min-width: 0;
+  flex: 1;
 }
 
 /*
@@ -51580,13 +51717,13 @@ DEPRECATED
   color: var(--color-primary-default);
 }
 
-/* [dir="ltr"] .onboarding-flow--welcome-banner {
-  background: url("/images/welcome-banner.png") no-repeat calc(50% + 500px) 160px;
+[dir="ltr"] .onboarding-flow--welcome-banner {
+  background: url("./images/welcome-banner.png") no-repeat calc(50% + 500px) 160px;
 }
 
 [dir="rtl"] .onboarding-flow--welcome-banner {
-  background: url("/images/welcome-banner.png") no-repeat calc(100% - (50% + 500px)) 160px;
-} */
+  background: url("./images/welcome-banner.png") no-repeat calc(100% - (50% + 500px)) 160px;
+}
 
 [dir] .onboarding-flow--welcome-banner {
   background-color: var(--color-accent03-light);
@@ -51858,7 +51995,7 @@ DEPRECATED
   background: var(--color-background-default);
   display: flex;
   flex-direction: column;
-  height: auto;
+  height: 100%;
   width: 100%;
 }
 
@@ -52935,45 +53072,8 @@ DEPRECATED
   border: 0;
 }
 
-.transaction-shield-page__membership {
-  background-size: 85px;
-  height: 85px;
-}
-
-.transaction-shield-page__membership .transaction-shield-page__membership-text {
-  color: var(--color-accent03-light);
-}
-
-/* [dir="ltr"] .transaction-shield-page__membership--active {
-  background: url("/images/shield-membership-active.png") no-repeat right -10px center;
-}
-
-[dir="rtl"] .transaction-shield-page__membership--active {
-  background: url("/images/shield-membership-active.png") no-repeat left -10px center;
-} */
-
-[dir] .transaction-shield-page__membership--active {
-  background-color: var(--color-accent03-dark);
-}
-
-.transaction-shield-page__membership--loading {
-  background: var(--color-border-muted);
-}
-
-/* [dir="ltr"] .transaction-shield-page__membership--inactive {
-  background: url("/images/shield-membership-inactive.png") no-repeat right -10px center;
-}
-
-[dir="rtl"] .transaction-shield-page__membership--inactive {
-  background: url("/images/shield-membership-inactive.png") no-repeat left -10px center;
-} */
-
-[dir] .transaction-shield-page__membership--inactive {
-  background-color: var(--color-background-subsection);
-}
-
-.transaction-shield-page__membership--inactive .transaction-shield-page__membership-text {
-  color: var(--color-text-default);
+.transaction-shield-page__error-content {
+  margin-top: 120px;
 }
 
 .transaction-shield-page__row {
@@ -52991,6 +53091,36 @@ DEPRECATED
   margin-bottom: 0;
 }
 
+.transaction-shield-page__membership {
+  height: 85px;
+  position: relative;
+  overflow: hidden;
+}
+
+.transaction-shield-page__membership--active {
+  background-color: var(--color-accent03-dark);
+}
+
+.transaction-shield-page__membership--loading {
+  background-color: var(--color-border-muted);
+}
+
+.transaction-shield-page__membership--inactive {
+  background-color: var(--color-background-subsection);
+}
+
+.transaction-shield-page__membership--inactive-light {
+  background-color: var(--shield-membership-inactive-light);
+}
+
+.transaction-shield-page__membership-text {
+  color: var(--color-accent03-light);
+}
+
+.transaction-shield-page__membership--inactive .transaction-shield-page__membership-text {
+  color: var(--color-text-default);
+}
+
 .transaction-shield-page .warning-button:hover {
   color: var(--color-warning-default);
 }
@@ -53003,6 +53133,36 @@ DEPRECATED
   .transaction-shield-page__notification-banner {
     margin-inline: -16px;
   }
+}
+
+.transaction-shield-page-shield-banner__container {
+  position: absolute;
+  top: -4px;
+  height: 93px;
+  width: 93px;
+}
+
+[dir="ltr"] .transaction-shield-page-shield-banner__container {
+  right: 0;
+}
+
+[dir="rtl"] .transaction-shield-page-shield-banner__container {
+  left: 0;
+}
+
+.transaction-shield-page-shield-banner__canvas {
+  height: 100%;
+  width: 100%;
+}
+
+.transaction-shield-page-shield-icon__container {
+  height: 32px;
+  width: 32px;
+}
+
+.transaction-shield-page-shield-icon__canvas {
+  height: 100%;
+  width: 100%;
 }
 
 .account-selector-modal .account-selector-modal__account:hover {
@@ -53311,14 +53471,6 @@ DEPRECATED
     flex: 0 0 40%;
     max-width: 197px;
   }
-
-  .settings-page__content__tabs .tab-bar__tab {
-    max-height: 50px;
-  }
-
-  .settings-page__content__tabs .tab-bar__tab__caret {
-    display: none;
-  }
 }
 
 .settings-page__content__modules {
@@ -53507,7 +53659,9 @@ DEPRECATED
   }
 
   .settings-page--selected .settings-page__content__modules {
-    display: block;
+    display: flex;
+    flex-flow: column;
+    overflow-y: auto;
   }
 }
 
@@ -53536,7 +53690,6 @@ DEPRECATED
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  max-width: 250px;
 }
 
 .settings-page--sidepanel .settings-page__header__title-container__close-button {
@@ -53599,8 +53752,37 @@ DEPRECATED
   flex: 1 1 auto;
 }
 
+@media screen and (min-width: 576px) {
+  .settings-page--sidepanel .settings-page__content__tabs .tab-bar__tab {
+    font-size: 1.125rem;
+    font-family: var(--font-family-default);
+    line-height: 140%;
+    font-style: normal;
+    font-weight: normal;
+    max-height: none;
+  }
+}
+
+.settings-page--sidepanel .settings-page__content__tabs .tab-bar__tab__selected-indicator {
+  display: none;
+}
+
 .settings-page--sidepanel .settings-page__content__tabs .tab-bar__tab__caret {
   display: block;
+}
+
+@media screen and (min-width: 576px) {
+  .settings-page--sidepanel .settings-page__content__tabs .tab-bar__tab__content__title {
+    font-size: 1.125rem;
+    font-family: var(--font-family-default);
+    line-height: 140%;
+    font-style: normal;
+    font-weight: normal;
+  }
+
+  .settings-page--sidepanel .settings-page__content__tabs .tab-bar__tab--active {
+    background-color: unset;
+  }
 }
 
 .settings-page--sidepanel .settings-page__content__modules {
@@ -53624,7 +53806,8 @@ DEPRECATED
 }
 
 .settings-page--sidepanel.settings-page--selected .settings-page__content__modules {
-  display: block;
+  display: flex;
+  flex-flow: column;
 }
 
 .smart-transaction-status-page {
@@ -54434,14 +54617,14 @@ DEPRECATED
   width: 100%;
 }
 
-/* .review-quote::after {
+.review-quote::after {
   position: absolute;
   width: 0;
   height: 0;
   overflow: hidden;
   z-index: -1;
-  content: url("/images/transaction-background-top.svg") url("/images/transaction-background-bottom.svg");
-} */
+  content: url("./images/transaction-background-top.svg") url("./images/transaction-background-bottom.svg");
+}
 
 .review-quote__content {
   display: flex;
@@ -56608,7 +56791,6 @@ DEPRECATED
 .bridge__container {
   height: 100%;
   min-width: 360px;
-  max-width: 480px;
   overflow-y: scroll;
   scrollbar-width: none;
   scrollbar-color: var(--color-icon-muted) transparent;
@@ -56644,26 +56826,12 @@ DEPRECATED
   max-width: 400px;
 }
 
-.unlock-page__container {
+.unlock-page__container--light {
   background-color: var(--welcome-bg-light);
 }
 
-@media (prefers-color-scheme: dark) {
-  .unlock-page__container {
-    background-color: var(--color-accent02-dark);
-  }
-}
-
-.unlock-page__password-input {
-  background-color: transparent;
-}
-
-.unlock-page__password-input-container {
-  border-color: var(--color-border-default);
-}
-
-.unlock-page__password-input > input::placeholder {
-  color: var(--color-text-alternative);
+.unlock-page__container--dark {
+  background-color: var(--color-accent02-dark);
 }
 
 .unlock-page__mascot-container {
@@ -56683,6 +56851,22 @@ DEPRECATED
   left: 0;
 }
 
+.unlock-page__mascot-container__horizontal-logo {
+  margin-bottom: 24px;
+  width: 180px;
+  height: 180px;
+}
+
+.unlock-page__mascot-container__horizontal-logo--popup {
+  margin-bottom: 24px;
+}
+
+@media screen and (max-width: calc(768px - 1px)) {
+  .unlock-page__mascot-container__horizontal-logo--popup {
+    margin-bottom: 0;
+  }
+}
+
 .unlock-page__mascot-container__logo {
   margin-bottom: 100px;
 }
@@ -56691,55 +56875,6 @@ DEPRECATED
   .unlock-page__mascot-container__logo {
     margin-bottom: 48px;
   }
-}
-
-.account-list-page {
-  max-width: 600px;
-}
-
-.account-list-page__content {
-  padding: 0;
-}
-
-/*
-Responsive breakpoints
-*/
-/*
-DEPRECATED
-*/
-/**
-* @deprecated The typography mixins `@include design-system.H1` - `@include design-system.H9` have been deprecated in favor of the `<Text>` component from the component-library.
-* Please update your code to use the `<Text>` component instead, which can be found in ui/components/component-library/text/text.tsx.
-* You can find documentation for the new `<Text>` component in the MetaMask Storybook:
-* {@link https://metamask.github.io/metamask-storybook/?path=/docs/components-componentlibrary-text--docs}
-* If you would like to help with the replacement of the old mixins `@include design-system.H1` - `@include design-system.H9`, please submit a pull request against this GitHub issue:
-* {@link https://github.com/MetaMask/metamask-extension/issues/19533}
-*/
-/*
-  Z-Indicies
-*/
-.wallet-details-page {
-  max-width: 600px;
-}
-
-.wallet-details-page .wallet-details-page__rows-container .wallet-details-page__row {
-  margin-bottom: 1px;
-}
-
-.wallet-details-page .wallet-details-page__rows-container .wallet-details-page__row:first-of-type {
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-.wallet-details-page .wallet-details-page__rows-container .wallet-details-page__row:last-of-type {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  margin-bottom: 0;
-}
-
-.wallet-details-page .wallet-details-page__rows-container .wallet-details-page__row.wallet-details-page__srp-button {
-  cursor: pointer;
-  border: none;
 }
 
 .multichain-wallet-details-page {
@@ -56787,9 +56922,6 @@ DEPRECATED
   z-index: 55;
   padding: 24px;
   padding-top: 0;
-  max-width: 446px;
-  min-height: 700px;
-  height: 700px;
 }
 
 @media screen and (max-width: calc(576px - 1px)) {
@@ -56859,29 +56991,6 @@ DEPRECATED
   }
 }
 
-.address-qr-code-page {
-  max-width: 600px;
-}
-
-.multichain-account-details-page {
-  max-width: 600px;
-}
-
-.multichain-account-details-page .multichain-account-details__section .multichain-account-details__row {
-  margin-bottom: 1px;
-}
-
-.multichain-account-details-page .multichain-account-details__section .multichain-account-details__row:first-of-type {
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-}
-
-.multichain-account-details-page .multichain-account-details__section .multichain-account-details__row:last-of-type {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
-  margin-bottom: 0;
-}
-
 .multichain-account-details-page {
   max-width: 600px;
 }
@@ -56937,6 +57046,10 @@ DEPRECATED
   max-width: 600px;
 }
 
+.shield-plan-page .shield-plan-page__error-content {
+  margin-top: 120px;
+}
+
 .shield-plan-page .shield-plan-page__plans {
   grid-template-columns: 1fr 1fr;
 }
@@ -56944,6 +57057,17 @@ DEPRECATED
 .shield-plan-page .shield-plan-page__plan {
   border: 1px solid transparent;
   position: relative;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  column-gap: 16px;
+}
+
+@media screen and (max-width: calc(576px - 1px)) {
+  .shield-plan-page .shield-plan-page__plan {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    column-gap: 8px;
+  }
 }
 
 .shield-plan-page .shield-plan-page__plan .shield-plan-page__radio {
@@ -56973,6 +57097,12 @@ DEPRECATED
 
 [dir="rtl"] .shield-plan-page .shield-plan-page__plan .shield-plan-page__save-badge {
   left: 10px;
+}
+
+@media screen and (max-width: calc(576px - 1px)) {
+  .shield-plan-page .shield-plan-page__plan .shield-plan-page__plan-price {
+    font-size: 16px;
+  }
 }
 
 .shield-plan-page .shield-plan-page__plan--selected {
@@ -57395,112 +57525,35 @@ DEPRECATED
 .main-container-wrapper {
   display: flex;
   justify-content: center;
-  flex: 1 0 auto;
-  min-height: 0;
   width: 100%;
 }
 
 @media screen and (min-width: 576px) {
-  .main-container {
-    width: 85vw;
-    min-height: 90vh;
-  }
-
   .main-container--has-shadow {
     box-shadow: var(--shadow-size-xs) var(--color-shadow-default);
   }
 }
 
 @media screen and (min-width: 768px) {
-  .main-container {
-    width: 80vw;
-    min-height: 82vh;
-  }
-
   .main-container--has-shadow {
     box-shadow: var(--shadow-size-xs) var(--color-shadow-default);
   }
 }
 
 @media screen and (min-width: 1280px) {
-  .main-container {
-    width: 62vw;
-    min-height: 82vh;
-  }
-
   .main-container--has-shadow {
     box-shadow: var(--shadow-size-xs) var(--color-shadow-default);
   }
 }
 
-@media screen and (max-width: calc(576px - 1px)) {
-  .main-container {
-    width: 100%;
-    overflow-y: auto;
-    background-color: var(--color-background-default);
-  }
-
-  .main-container-wrapper {
-    flex: 1;
-  }
-}
-
-.app--sidepanel .main-container {
-  max-width: 490px;
-  min-width: 360px;
+.main-container {
   width: 100%;
+  overflow-y: auto;
+  background-color: var(--color-background-default);
 }
 
-.app--sidepanel .multichain-app-header__contents, .app--sidepanel .multichain-app-header__lock-contents {
-  max-width: 490px;
-  min-width: 360px;
-  width: 100%;
-}
-
-.app--sidepanel .page-container {
-  max-width: 490px;
-  min-width: 360px;
-  width: 100%;
-}
-
-.app--sidepanel .multichain-page {
-  max-width: 490px;
-  min-width: 360px;
-}
-
-.app--sidepanel .multichain-page__inner-container {
-  max-width: 490px;
-  min-width: 360px;
-}
-
-.app--sidepanel .multichain-send-page {
-  max-width: 490px;
-  min-width: 360px;
-  width: 100%;
-}
-
-.app--sidepanel .snaps {
-  max-width: 490px;
-  min-width: 360px;
-  width: 100%;
-}
-
-.app--sidepanel .permissions-connect {
-  max-width: 490px;
-  min-width: 360px;
-  width: 100%;
-}
-
-.app--sidepanel .redesigned__send__container {
-  max-width: 490px;
-  min-width: 360px;
-  width: 100%;
-}
-
-.app--sidepanel .redesigned__send__wrapper {
-  max-width: 490px;
-  min-width: 360px;
-  width: 100%;
+.main-container-wrapper {
+  flex: 1;
 }
 
 .first-view-main {
@@ -57553,6 +57606,15 @@ DEPRECATED
 .app.browser-brave.app--sidepanel .redesigned__send__container,
 .app.browser-brave.app--sidepanel .redesigned__send__wrapper {
   min-width: 320px;
+}
+
+.main-container {
+  flex: 1;
+}
+
+.redesigned__send__wrapper {
+  width: 100%;
+  background: var(--color-background-default);
 }
 
 /*
@@ -59136,6 +59198,10 @@ DEPRECATED
 
 .disabled\:cursor-not-allowed:disabled{
   cursor: not-allowed;
+}
+
+.group.app--sidepanel .group-\[\.app--sidepanel\]\:max-w-\[var\(--width-max-sidepanel\)\]{
+  max-width: var(--width-max-sidepanel);
 }
 
 @media (min-width: 768px){

@@ -9,12 +9,11 @@ import { decryptVaultSync } from "./lib";
 import useSystemTheme from "./useSystemTheme";
 
 import { ReactComponent as SpinnerSVG } from "./images/spinner.svg";
+import MetaFoxHorizontalLogo from './horizontal-logo';
 import closeIcon from "./images/icons/close.svg";
 import foxSVG from "./images/metamask-fox.svg";
 import forgotLock from "./images/forgot-password-lock.png";
 import spinnerGIF from "./images/spinner.gif";
-import lightLogo from "./images/light-logo.png";
-import darkLogo from "./images/dark-logo.png";
 
 import "./index.css";
 import "./custom.css";
@@ -169,7 +168,6 @@ function ForgetPasswordModal({ setOpen }) {
                   width="154"
                   height="154"
                   alt="Forgot your password?"
-                  // style="align-self: center;"
                 />
               </div>
               <p className="mm-box mm-text mm-text--body-md mm-box--margin-bottom-4 mm-box--color-text-default">
@@ -386,12 +384,7 @@ export default function MetaMaskUnlock({onSuccess}) {
                     <div className="mm-box mm-box--display-flex mm-box--flex-direction-column mm-box--align-items-center mm-box--width-full">
                       <div className="mm-box unlock-page__mascot-container mm-box--margin-bottom-0">
                         <div className="mm-box unlock-page__mascot-container__logo">
-                          <img
-                            src={theme === "light" ? lightLogo : darkLogo}
-                            width="180"
-                            height="180"
-                            alt=""
-                          />
+                          <MetaFoxHorizontalLogo className={`unlock-page__mascot-container__horizontal-logo`}/>
                         </div>
                       </div>
 
@@ -412,7 +405,7 @@ export default function MetaMaskUnlock({onSuccess}) {
                         Unlock
                       </button>
                       <button
-                        className="mm-box mm-text mm-button-base mm-button-link mm-button-link--size-auto mm-text--body-md-medium mm-box--margin-bottom-6 mm-box--padding-0 mm-box--padding-right-0 mm-box--padding-left-0 mm-box--display-inline-flex mm-box--justify-content-center mm-box--align-items-center  mm-box--color-text-default mm-box--background-color-transparent"
+                        className="mm-box mm-text mm-button-base mm-button-link mm-button-link--size-auto mm-text--body-md-medium mm-box--margin-bottom-4  mm-box--padding-0 mm-box--padding-right-0 mm-box--padding-left-0 mm-box--display-inline-flex mm-box--justify-content-center mm-box--align-items-center  mm-box--color-text-default mm-box--background-color-transparent mm-box--color-primary-default"
                         data-testid="unlock-forgot-password-button"
                         type="button"
                         onClick={() => setOpen(true)}
